@@ -2,85 +2,70 @@ html, body {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8e44ad+0,9652b3+50,8e44ad+100 */
   background: #8e44ad; /* Old browsers */
   text-align: center;
-  padding-top: 50px;
+  padding-top: 10px;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
-$size: 500px;
+.singleplayer .lock-outline {
+  background-image: url(../img/lock-outline.png);
+  background-size: cover;
+  width: (867px/2);
+  height: (867px/2);
+  border: 1px solid black;
+  margin: auto;
+}
 
 .lock {
   margin: auto;
-  border-radius: 50%;
-  width: $size;
-  height: $size;
-  border: 15px solid #8e44ad;
-  background-color: white;
+  width: (529px/2);
+  height: (528px/2);
+
   position: relative;
-  box-shadow: 0px 0px 150px #aa51cf;
+  top: 92px;
 
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
   -webkit-perspective: 1000;
+
+  background-image: url(../img/lock-bg.png);
+  background-size: cover;
 }
 
-$innerPadding: $size / 5;
+.lock-arrow {
+  width: (74px/2);
+  height: (69px/2);
+  position: absolute;
+  top: 0;
+  left: 114px;
+  background-image: url(../img/lock-arrow.png);
+  background-size: cover;
+}
 
-.lock-inner {
-  border: 2px solid #c4c4c4;
-  box-sizing: border-box;
+.lock-knob {
+  width: 200px;
+  height: 200px;
+  margin: auto;
   position: relative;
-  left: $innerPadding/2;
-  top: $innerPadding/2;
-  border-radius: 50%;
-  width: $size - $innerPadding;
-  height: $size - $innerPadding;
-  box-shadow: inset 0px 0px 50px #c4c4c4;
-  transform: rotate(0deg);
-
-  //animation-name: spin;
-  //animation-duration: 4000ms;
-  //animation-iteration-count: infinite;
-  //animation-timing-function: linear;
+  top: 25px;
+  background-image: url(../img/lock-knob-bg.png);
+  background-size: cover;
 }
 
-$counterSize: 140px;
-$counterSize: $size/3.57;
-.lock-counter {
-  position: absolute;
-  background-color: #e0e0e0;
-  left: 180px;
-  top: 180px;
-  border-radius: 50%;
-  line-height: $counterSize - 2;
-  text-align: center;
-  color: #45cfb0;
-  font-size: 58px;
-  font-weight: bold;
-  width: $counterSize;
-  height: $counterSize;
-}
+.lock-knob-items {
+  width: (357px/2);
+  height: (357px/2);
 
-.lock-corner {
-  position: absolute;
-  left: (($size)/2);
-  top: (($size)/2);
-  &:before {
-    content: ' ';
-    //width: 65px;
-    //height: 65px;
+  position: relative;
+  top: 11px;
+  left: 11px;
 
-    width: 0;
-    height: 0;
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
+  background-image: url(../img/lock-knob.png);
+  background-size: cover;
 
-    border-top: 65px solid #8e44ad;
-
-    //background-color: #8e44ad;
-    position: absolute;
-    top: -250px;
-    left: -30px;
-  }
+  animation-name: spin;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 @keyframes spin {
@@ -91,37 +76,22 @@ $counterSize: $size/3.57;
     }
 }
 
-.lock-line {
+
+.lock-counter {
+  width: (150px/2);
+  height: (150px/2);
+
+  line-height: 75px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #45cfb0;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+
   position: absolute;
-  left: (($size - $innerPadding)/2);
-  top: (($size - $innerPadding)/2);
-  &:before {
-    content: ' ';
-    width: 13px;
-    height: 70px;
-    border-radius: 15px;
-    background-color: #e3e3e3;
-    background-color: #f1f1f1;
-    position: absolute;
-    top: -180px;
-    left: -7px;
-  }
-}
+  top: 86px;
+  left: 95px;
 
-.lock-line-3 {
-  &:before {
-    background-color: #47e6c4;
-  }
-}
-
-@for $i from 1 through 26 {
-  .lock-line-#{$i} {
-    transform: rotate(15deg*$i);
-  }
-}
-
-@for $i from 1 through 26 {
-  .lock-inner-rotate-step-#{$i} {
-    transform: rotate(15deg*$i);
-  }
+  background-image: url(../img/lock-counter.png);
+  background-size: cover;
 }

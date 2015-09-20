@@ -20,37 +20,14 @@
     <ion-pane ng-controller="LockerController">
       <ion-header-bar class="bar-stable">
       </ion-header-bar>
-      <ion-content scroll="false" on-drag="handleDrag($event)">
-        <div class="lock-wrapper">
+      <ion-content scroll="false" class="singleplayer" on-drag="handleDrag($event)">
+        <div class="lock-outline">
           <div class="lock">
-            <div class="lock-inner" ng-class="lockInnerStepClass">
-              <div class="lock-line lock-line-0"></div>
-              <div class="lock-line lock-line-1"></div>
-              <div class="lock-line lock-line-2"></div>
-              <div class="lock-line lock-line-3"></div>
-              <div class="lock-line lock-line-4"></div>
-              <div class="lock-line lock-line-5"></div>
-              <div class="lock-line lock-line-6"></div>
-              <div class="lock-line lock-line-7"></div>
-              <div class="lock-line lock-line-8"></div>
-              <div class="lock-line lock-line-9"></div>
-              <div class="lock-line lock-line-10"></div>
-              <div class="lock-line lock-line-11"></div>
-              <div class="lock-line lock-line-12"></div>
-              <div class="lock-line lock-line-13"></div>
-              <div class="lock-line lock-line-14"></div>
-              <div class="lock-line lock-line-15"></div>
-              <div class="lock-line lock-line-16"></div>
-              <div class="lock-line lock-line-17"></div>
-              <div class="lock-line lock-line-18"></div>
-              <div class="lock-line lock-line-19"></div>
-              <div class="lock-line lock-line-20"></div>
-              <div class="lock-line lock-line-21"></div>
-              <div class="lock-line lock-line-22"></div>
-              <div class="lock-line lock-line-23"></div>
+            <div class="lock-knob">
+              <div class="lock-knob-items"></div>
             </div>
-            <div class="lock-counter">12</div>
-            <div class="lock-corner"></div>
+            <div class="lock-counter">1</div>
+            <div class="lock-arrow"></div>
           </div>
         </div>
       </ion-content>
