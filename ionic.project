@@ -1,0 +1,12 @@
+{
+  "name": "lock-me",
+  "app_id": "71d4f30e",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

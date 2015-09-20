@@ -1,0 +1,242 @@
+html, body {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8e44ad+0,9652b3+50,8e44ad+100 */
+  background: #8e44ad;
+  /* Old browsers */
+  text-align: center;
+  padding-top: 50px;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif; }
+
+.lock {
+  margin: auto;
+  border-radius: 50%;
+  width: 500px;
+  height: 500px;
+  border: 15px solid #8e44ad;
+  background-color: white;
+  position: relative;
+  box-shadow: 0px 0px 150px #aa51cf;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000; }
+
+.lock-inner {
+  border: 2px solid #c4c4c4;
+  box-sizing: border-box;
+  position: relative;
+  left: 50px;
+  top: 50px;
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+  box-shadow: inset 0px 0px 50px #c4c4c4;
+  transform: rotate(0deg); }
+
+.lock-counter {
+  position: absolute;
+  background-color: #e0e0e0;
+  left: 180px;
+  top: 180px;
+  border-radius: 50%;
+  line-height: 138.05602px;
+  text-align: center;
+  color: #45cfb0;
+  font-size: 58px;
+  font-weight: bold;
+  width: 140.05602px;
+  height: 140.05602px; }
+
+.lock-corner {
+  position: absolute;
+  left: 250px;
+  top: 250px; }
+  .lock-corner:before {
+    content: ' ';
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 65px solid #8e44ad;
+    position: absolute;
+    top: -250px;
+    left: -30px; }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+.lock-line {
+  position: absolute;
+  left: 200px;
+  top: 200px; }
+  .lock-line:before {
+    content: ' ';
+    width: 13px;
+    height: 70px;
+    border-radius: 15px;
+    background-color: #e3e3e3;
+    background-color: #f1f1f1;
+    position: absolute;
+    top: -180px;
+    left: -7px; }
+
+.lock-line-3:before {
+  background-color: #47e6c4; }
+
+.lock-line-1 {
+  transform: rotate(15deg); }
+
+.lock-line-2 {
+  transform: rotate(30deg); }
+
+.lock-line-3 {
+  transform: rotate(45deg); }
+
+.lock-line-4 {
+  transform: rotate(60deg); }
+
+.lock-line-5 {
+  transform: rotate(75deg); }
+
+.lock-line-6 {
+  transform: rotate(90deg); }
+
+.lock-line-7 {
+  transform: rotate(105deg); }
+
+.lock-line-8 {
+  transform: rotate(120deg); }
+
+.lock-line-9 {
+  transform: rotate(135deg); }
+
+.lock-line-10 {
+  transform: rotate(150deg); }
+
+.lock-line-11 {
+  transform: rotate(165deg); }
+
+.lock-line-12 {
+  transform: rotate(180deg); }
+
+.lock-line-13 {
+  transform: rotate(195deg); }
+
+.lock-line-14 {
+  transform: rotate(210deg); }
+
+.lock-line-15 {
+  transform: rotate(225deg); }
+
+.lock-line-16 {
+  transform: rotate(240deg); }
+
+.lock-line-17 {
+  transform: rotate(255deg); }
+
+.lock-line-18 {
+  transform: rotate(270deg); }
+
+.lock-line-19 {
+  transform: rotate(285deg); }
+
+.lock-line-20 {
+  transform: rotate(300deg); }
+
+.lock-line-21 {
+  transform: rotate(315deg); }
+
+.lock-line-22 {
+  transform: rotate(330deg); }
+
+.lock-line-23 {
+  transform: rotate(345deg); }
+
+.lock-line-24 {
+  transform: rotate(360deg); }
+
+.lock-line-25 {
+  transform: rotate(375deg); }
+
+.lock-line-26 {
+  transform: rotate(390deg); }
+
+.lock-inner-rotate-step-1 {
+  transform: rotate(15deg); }
+
+.lock-inner-rotate-step-2 {
+  transform: rotate(30deg); }
+
+.lock-inner-rotate-step-3 {
+  transform: rotate(45deg); }
+
+.lock-inner-rotate-step-4 {
+  transform: rotate(60deg); }
+
+.lock-inner-rotate-step-5 {
+  transform: rotate(75deg); }
+
+.lock-inner-rotate-step-6 {
+  transform: rotate(90deg); }
+
+.lock-inner-rotate-step-7 {
+  transform: rotate(105deg); }
+
+.lock-inner-rotate-step-8 {
+  transform: rotate(120deg); }
+
+.lock-inner-rotate-step-9 {
+  transform: rotate(135deg); }
+
+.lock-inner-rotate-step-10 {
+  transform: rotate(150deg); }
+
+.lock-inner-rotate-step-11 {
+  transform: rotate(165deg); }
+
+.lock-inner-rotate-step-12 {
+  transform: rotate(180deg); }
+
+.lock-inner-rotate-step-13 {
+  transform: rotate(195deg); }
+
+.lock-inner-rotate-step-14 {
+  transform: rotate(210deg); }
+
+.lock-inner-rotate-step-15 {
+  transform: rotate(225deg); }
+
+.lock-inner-rotate-step-16 {
+  transform: rotate(240deg); }
+
+.lock-inner-rotate-step-17 {
+  transform: rotate(255deg); }
+
+.lock-inner-rotate-step-18 {
+  transform: rotate(270deg); }
+
+.lock-inner-rotate-step-19 {
+  transform: rotate(285deg); }
+
+.lock-inner-rotate-step-20 {
+  transform: rotate(300deg); }
+
+.lock-inner-rotate-step-21 {
+  transform: rotate(315deg); }
+
+.lock-inner-rotate-step-22 {
+  transform: rotate(330deg); }
+
+.lock-inner-rotate-step-23 {
+  transform: rotate(345deg); }
+
+.lock-inner-rotate-step-24 {
+  transform: rotate(360deg); }
+
+.lock-inner-rotate-step-25 {
+  transform: rotate(375deg); }
+
+.lock-inner-rotate-step-26 {
+  transform: rotate(390deg); }
+
+/*# sourceMappingURL=style.css.map */
