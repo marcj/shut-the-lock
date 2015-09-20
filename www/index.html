@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
@@ -14,23 +14,32 @@
     <script src="cordova.js"></script>
     <script src="js/hammer.js"></script>
     <script src="js/app.js"></script>
-  </head>
-  <body ng-app="lock-me">
+    <script src="js/ion.sound.js"></script>
+</head>
+<body ng-app="lock-me">
 
-    <ion-pane ng-controller="LockerController">
-      <ion-header-bar class="bar-stable">
-      </ion-header-bar>
-      <ion-content scroll="false" class="singleplayer" on-drag="handleDrag($event)">
-        <div class="lock-outline">
-          <div class="lock">
-            <div class="lock-knob">
-              <div class="lock-knob-items"></div>
+<ion-pane>
+    <ion-header-bar class="bar-stable">
+    </ion-header-bar>
+    <ion-content scroll="false" class="singleplayer" ng-controller="SinglePlayerController">
+        <h3>Level {{level}}</h3>
+        <div class="lock-outline" ng-controller="LockerController" on-drag="handleDrag($event)">
+            <div class="lock" on-touchstart="handleTouch($event)">
+                <div class="lock-knob">
+                    <div class="lock-knob-items" id="lock-knob-items" ng-class="{&apos;no-transition&apos;: !runs}"></div>
+                </div>
+                <div class="lock-counter">{{stepsNeeded}}</div>
+                <div class="lock-arrow"></div>
             </div>
-            <div class="lock-counter">1</div>
-            <div class="lock-arrow"></div>
-          </div>
+            <div ng-if="failed" on-touch="restart()" class="lock-failed">
+                <h2>Failed!</h2>
+            </div>
+            <div ng-if="succeeded" on-touch="restart()" class="lock-succeeded">
+                <h2>Success!</h2>
+                Unlocked level {{level}}
+            </div>
         </div>
-      </ion-content>
-    </ion-pane>
-  </body>
+    </ion-content>
+</ion-pane>
+</body>
 </html>
