@@ -6,10 +6,10 @@ html, body {
   padding: 0;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   overflow: hidden;
+  -webkit-user-select: none;
 }
 
 .lock-outline {
-  -webkit-user-select: auto;
   position: relative;
   background-image: url(../img/lock-outline.png);
   background-size: cover;

@@ -110,7 +110,6 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
             if (angle >= -tolerance && angle <= tolerance) {
                 $scope.stepsNeeded--;
 
-                ion.sound.play("lock" + getRandomIntInclusive(1,3));
 
                 if (0 === $scope.stepsNeeded) {
                     $scope.runs = false;
@@ -118,9 +117,12 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
                     knob.style.webkitTransform = 'rotate(' + angle + 'deg)';
                     $scope.succeeded = true;
                     $scope.$parent.level++;
+
+                    ion.sound.play("lock" + getRandomIntInclusive(1,2));
                     return;
                 }
 
+                ion.sound.play("lock_unlock");
                 $scope.nextStep();
             } else {
                 knob.style.transform = 'rotate(' + angle + 'deg)';
@@ -140,13 +142,14 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
                 //volume: 0.2
             },
             {
-                name: "lock3"
+                name: "lock_unlock"
                 //volume: 0.3,
                 //preload: false
             }
         ],
         volume: 0.5,
         path: "sounds/",
+        multiplay: true,
         preload: true
     });
 
