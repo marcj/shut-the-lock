@@ -15,6 +15,8 @@ var lockMe = angular.module('lock-me', ['ionic'])
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
+
+            gamecenter.auth(function(user){console.log('gamecenter success', user)}, function(e){console.log('gamecenter error', e)});
         });
     });
 
@@ -124,12 +126,30 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
 
                 ion.sound.play("lock_unlock");
                 $scope.nextStep();
+
+                setTimeout(function() {
+                    var data = {
+                        score: $scope.$parent.level,
+                        leaderboardId: "board1"
+                    };
+                    gamecenter.submitScore(function () {
+                    }, function () {
+                    }, data);
+                });
+
             } else {
                 knob.style.transform = 'rotate(' + angle + 'deg)';
                 knob.style.webkitTransform = 'rotate(' + angle + 'deg)';
                 $scope.failure();
             }
         }
+    };
+
+    $scope.showLeaderboard = function(){
+        var data = {
+            leaderboardId: "board1"
+        };
+        gamecenter.showLeaderboard(function(){}, function(){}, data);
     };
 
     ion.sound({
@@ -147,7 +167,7 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
                 //preload: false
             }
         ],
-        volume: 0.5,
+        volume: 1,
         path: "sounds/",
         multiplay: true,
         preload: true

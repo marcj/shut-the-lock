@@ -23,6 +23,7 @@
     </ion-header-bar>
     <ion-content scroll="false" class="singleplayer" ng-controller="SinglePlayerController">
         <h3>Level {{level}}</h3>
+        <button ng-touch="showLeaderboard()">Show leaderboard</button>
         <div class="lock-outline" ng-controller="LockerController">
             <div class="lock" on-touchstart="handleTouch($event)">
                 <div class="lock-knob">
