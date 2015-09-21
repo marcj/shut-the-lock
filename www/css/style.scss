@@ -20,10 +20,10 @@ html, body {
   min-width: 285px;
 }
 
-.no-transition {
-  -webkit-transition: none !important;
-  transition: none !important;
-}
+//.no-transition {
+//  -webkit-transition: none !important;
+//  transition: none !important;
+//}
 
 .lock {
   margin: auto;
@@ -90,10 +90,10 @@ html, body {
   background-image: url(../img/lock-knob.png);
   background-size: cover;
 
-  -webkit-transition: transform 0.2s linear;
-  -webkit-transition-timing-function: linear;
-  transition-timing-function: linear;
-  transition: transform 0.2s linear;
+  //-webkit-transition: transform 0.2s linear;
+  //-webkit-transition-timing-function: linear;
+  //transition-timing-function: linear;
+  //transition: transform 0.2s linear;
   //-moz-transition: transform 0.2s;
   //-ms-transition: transform 0.2s;
   //-o-transition: transform 0.2s;

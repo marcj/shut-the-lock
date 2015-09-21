@@ -16,7 +16,13 @@ var lockMe = angular.module('lock-me', ['ionic'])
                 StatusBar.styleDefault();
             }
 
-            gamecenter.auth(function(user){console.log('gamecenter success', user)}, function(e){console.log('gamecenter error', e)});
+            if (window.gamecenter) {
+                window.gamecenter.auth(function(user){
+                    console.log('gamecenter success', user)
+                }, function(e){
+                    console.error('gamecenter error', e)
+                });
+            }
         });
     });
 
@@ -59,97 +65,74 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
         //$scope.lockInnerStepClass = 'lock-inner-rotate-step-' + $scope.lockInnerStep;
     };
 
-    function getAngle(el) {
-        var st = window.getComputedStyle(el, null);
-        var tr = st.getPropertyValue("-webkit-transform") ||
-            st.getPropertyValue("-moz-transform") ||
-            st.getPropertyValue("-ms-transform") ||
-            st.getPropertyValue("-o-transform") ||
-            st.getPropertyValue("transform") ||
-            null;
-
-        if (!tr || tr === 'none') {
-            return false;
-        }
-
-        var values = tr.split('(')[1];
-        values = values.split(')')[0];
-        values = values.split(',');
-        var a = values[0];
-        var b = values[1];
-        var c = values[2];
-        var d = values[3];
-
-        var scale = Math.sqrt(a * a + b * b);
-
-        return Math.round(Math.atan2(b, a) * (180 / Math.PI));
-    }
-
     $scope.runs = false;
     $scope.stepsNeeded = $scope.$parent.level;
 
-    $scope.active = true;
+    $scope.active = false;
+    $scope.blocked = false;
+
+    var lastAnimation;
     var tolerance = 7;
-    var lastFailureTimeout;
 
     $scope.handleTouch = function ($event) {
-        if ($scope.failed || !$scope.active) {
+        if ($scope.active && $scope.runs) {
+            $scope.runs = false;
+        } else {
             return;
         }
 
-        console.log('touch');
-        $timeout.cancel(lastFailureTimeout);
+        if ($scope.succeeded || $scope.failed) {
+            return;
+        }
 
-        if (!$scope.runs) {
-            console.log('handle start');
-            $scope.nextStep(true);
-            $scope.runs = true;
-        } else {
-            var angle = getAngle(knob);
+        var angle = $scope.currentAngle;
+        if (lastAnimation) {
+            //lastAnimation.cb = function(){};
+            lastAnimation.destroy();
+        }
+        console.log('touch, computed angle', angle, 'runs=', $scope.runs);
 
-            console.log('computed angle', angle);
+        //353 <-> 367
+        //-7 <-> 7
+        if (angle > tolerance) {
+            angle = 360 - angle;
+        }
 
-            if (angle >= -tolerance && angle <= tolerance) {
-                $scope.stepsNeeded--;
+        if (angle >= -tolerance && angle <= tolerance) {
+            $scope.stepsNeeded--;
 
+            console.log('hit!', angle, $scope.stepsNeeded);
+            if (0 === $scope.stepsNeeded) {
+                //knob.style.transform = 'rotate(' + angle + 'deg)';
+                //knob.style.webkitTransform = 'rotate(' + angle + 'deg)';
+                $scope.succeeded = true;
+                $scope.$parent.level++;
 
-                if (0 === $scope.stepsNeeded) {
-                    $scope.runs = false;
-                    knob.style.transform = 'rotate(' + angle + 'deg)';
-                    knob.style.webkitTransform = 'rotate(' + angle + 'deg)';
-                    $scope.succeeded = true;
-                    $scope.$parent.level++;
-
-                    ion.sound.play("lock" + getRandomIntInclusive(1,2));
-                    return;
-                }
-
-                ion.sound.play("lock_unlock");
-                $scope.nextStep();
-
-                setTimeout(function() {
-                    var data = {
-                        score: $scope.$parent.level,
-                        leaderboardId: "board1"
-                    };
-                    gamecenter.submitScore(function () {
-                    }, function () {
-                    }, data);
-                });
-
-            } else {
-                knob.style.transform = 'rotate(' + angle + 'deg)';
-                knob.style.webkitTransform = 'rotate(' + angle + 'deg)';
-                $scope.failure();
+                ion.sound.play("lock" + getRandomIntInclusive(1,2));
+                return;
             }
+
+            ion.sound.play("lock_unlock");
+            $scope.nextStep();
+
+            if (window.gamecenter) {
+                var data = {
+                    score: $scope.$parent.level,
+                    leaderboardId: "singleplayer"
+                };
+                window.gamecenter.submitScore(function () {}, function (e) {console.log('cannot submit gamecenter', e);}, data);
+            }
+
+        } else {
+            $scope.failure();
         }
     };
 
     $scope.showLeaderboard = function(){
         var data = {
-            leaderboardId: "board1"
+            leaderboardId: "singleplayer"
         };
-        gamecenter.showLeaderboard(function(){}, function(){}, data);
+        window.gamecenter.showLeaderboard(function(){}, function(){}, data);
     };
 
     ion.sound({
@@ -173,27 +156,32 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
         preload: true
     });
 
-    $scope.lastStep = 0;
-    $scope.restart = function () {
-        console.log('restart');
+    $scope.start = function() {
         $scope.active = true;
+        $scope.nextStep();
+    };
+
+    $scope.restart = function () {
+        if ($scope.blocked) {
+            return;
+        }
+
+        console.log('restart');
         $scope.stepsNeeded = $scope.$parent.level;
         $scope.failed = false;
-        $scope.runs = true;
         $scope.succeeded = false;
         $scope.nextStep();
     };
 
     $scope.failure = function() {
-        $scope.runs = false;
+        console.log('failure');
         $scope.failed = true;
-        $scope.active = false;
+        $scope.blocked = true;
 
         $timeout(function(){
-            $scope.active = true;
-        }, 100);
+            $scope.blocked = false;
+        }, 340);
     };
-
 
     $scope.nextStep = function (firstRun) {
         if (firstRun) {
@@ -203,37 +191,52 @@ lockMe.controller('LockerController', function ($scope, $timeout) {
         }
         $scope.targetPosition = $scope.targetStep * (360 / steps);
 
-        console.log('next step', $scope.step, $scope.targetPosition);
+        //$scope.animationStart = Date.now();
 
-        knob.style.webkitTransitionDuration = '0s';
-        knob.style.transitionDuration = '0s';
+        knob.style[ionic.CSS.TRANSFORM] = 'rotate(' + $scope.targetPosition + 'deg)';
 
-        knob.style.transform = 'rotate(' + $scope.targetPosition + 'deg)';
-        knob.style.webkitTransform = 'rotate(' + $scope.targetPosition + 'deg)';
+        var timePerStep = 150;
+        var targetDeg = -tolerance;
+        var timeTotal = $scope.targetStep * timePerStep;
 
-        console.log('go random', knob.style.transform);
-        $timeout(function () {
-            var timePerStep = 0.15;
+        if ($scope.targetStep > steps / 2) {
+            targetDeg = 360 + tolerance;
+            timeTotal = (steps - $scope.targetStep) * timePerStep;
+        }
+        console.log('next step', targetDeg, $scope.step, $scope.targetPosition);
 
-            var targetDeg = -tolerance;
+        $scope.runs = true;
+        lastAnimation = collide.animation({
+            duration: timeTotal,
+            easing: 'linear'
+        })
+        .on('step', function(v) {
 
-            var timeTotal = $scope.targetStep * timePerStep;
-
-            if ($scope.targetStep > steps / 2) {
-                targetDeg = 360 + tolerance;
-                timeTotal = (steps - $scope.targetStep) * timePerStep;
+            if (targetDeg < 0) {
+                var buffer = $scope.targetPosition + Math.abs(targetDeg);
+                v = buffer - (v * buffer);
+                v += targetDeg;
+            } else {
+                v = (v * (targetDeg - $scope.targetPosition));
+                v += $scope.targetPosition;
             }
 
-            lastFailureTimeout = $timeout(function () {
-                $scope.failure();
-            }, timeTotal * 1000);
+            $scope.currentAngle = v;
+            knob.style[ionic.CSS.TRANSFORM] = 'rotate(' + v + 'deg)';
+        })
+        .on('complete', function(){
+            if (!$scope.runs) return;
 
-            knob.style.webkitTransitionDuration = timeTotal + 's';
-            knob.style.transitionDuration = timeTotal + 's';
+            $scope.runs = false;
+            console.log('complete');
+                $timeout(function() {
+                    $scope.failure();
+                }, 0);
+        });
 
-            knob.style.transform = 'rotate(' + targetDeg + 'deg)';
-            knob.style.webkitTransform = 'rotate(' + targetDeg + 'deg)';
-            console.log('go back', knob.style.transform, timeTotal);
-        }, 50);
+        //$timeout(function(){
+        //    $scope.handleTouch();
+        //}, timeTotal + 30);
+        lastAnimation.start();
     };
 });
