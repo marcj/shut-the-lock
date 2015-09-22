@@ -4,9 +4,86 @@ html, body {
   text-align: center;
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   overflow: hidden;
   -webkit-user-select: none;
+  font-family: "Aller";
+}
+
+@font-face {
+  font-family: "Aller";
+  src: url("../font/Aller_Bd.ttf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Aller";
+  src: url("../font/Aller_Rg.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.no-padding {
+  padding: 0;
+  .col { padding: 0; }
+}
+
+.level-label {
+  font-family: "Aller";
+  font-size: 22px;
+  line-height: 28px;
+  color: #47e6c4;
+  font-style: italic;
+
+  padding-bottom: 25px;
+
+  h4 {
+    padding: 0;
+    margin: 0;
+    font-size: 42px;
+    line-height: 42px;
+    color: white;
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+
+.button.button-big {
+  background-color: #47e6c4;
+  display: block;
+  width: 90%;
+  margin: 15px 20px;
+  padding: 15px 0;
+  font-weight: bold;
+  font-family: "Aller";
+  font-size: 28px;
+  line-height: 35px;
+  color: white;
+  border-radius: 15px;
+}
+
+.button.button-bottom {
+  font-weight: bold;
+  font-family: "Aller";
+  font-size: 28px;
+  color: white;
+  background-color: #47e6c4;
+  margin: 0;
+  padding: 20px 0;
+}
+
+.pane {
+  background: #8e44ad;
+}
+
+.splash {
+  background-image: url(../img/logo.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: 193px;
+  background-size: 193px;
+  height: 100%;
+  display: block;
 }
 
 .lock-outline {
@@ -67,7 +144,16 @@ html, body {
   top: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(255,0,0, 0.5);
+}
+
+.header {
+  color: white;
+  position: relative;
+  top: 25px;
+}
+
+.player-failed {
+  background-color: rgba(255, 0, 0, 0.5);
 }
 
 .lock-succeeded {
@@ -76,7 +162,6 @@ html, body {
   top: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(117, 255, 123, 0.5);
 }
 
 .lock-knob-items {
@@ -107,11 +192,11 @@ html, body {
 @keyframes spin {
   from {
     transform: rotate(0deg);
-  } to {
-      transform: rotate(360deg);
-    }
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
 
 .lock-counter {
   width: (150px/2);
