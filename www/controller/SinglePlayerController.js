@@ -2,15 +2,50 @@ export default class SinglePlayerController {
     constructor($scope, $timeout, $state) {
         this.$timeout = $timeout;
         this.$state = $state;
-        this.level = 1;
         this.failed = false;
         this.succeeded = false;
         this.blocked = false;
-        this.levelDescription = 'Bloody beginner';
+
+        this.levelDescriptions = [
+            'Bloody beginner', //0-9
+            'Enganged amateur',//10-19
+            'Advanced player',//20-29
+            'Addicted', //30-39
+            'Engaged addicted', //40-49
+            'Crazy player', //50-59
+            'Better go out', //60-69
+            'It is getting serious', //70-79
+            'Ok, interesting', //80-89
+            'Are you serious?', //90-99
+        ];
+
+        this.setLevel(window.localStorage['singleplayerLevel'] || 1);
     }
+
+    setLevel(level){
+        this.level = level;
+
+        this.levelDescription = '';
+
+        for (let k in this.levelDescriptions) {
+            var start = k*10;
+            var end = start + 9;
+
+            if (this.level >= start && this.level <= end) {
+                this.levelDescription = this.levelDescriptions[k];
+                break;
+            }
+        }
+
+        if (!this.levelDescription) {
+            this.levelDescription = 'Crazy dog!';
+        }
+    }
+
 
     registerLock(lock) {
         this.lock = lock;
+        this.lock.stepsNeeded = this.level;
     }
 
     touch($event) {
@@ -38,6 +73,8 @@ export default class SinglePlayerController {
         this.$timeout(() => {
             this.succeeded = true;
             this.level++;
+            window.localStorage['singleplayerLevel'] = this.level;
+            this.setLevel(this.level);
         }, 1);
     }
 

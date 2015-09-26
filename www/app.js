@@ -49,7 +49,7 @@ lockMe.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         });
 
     //$locationProvider.html5Mode(true).hashPrefix('!');
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/start');
 });
 
 

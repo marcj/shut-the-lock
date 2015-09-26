@@ -2,8 +2,8 @@ import {getRandomIntInclusive} from '../utils';
 
 export default class LockController {
     constructor($scope, $timeout) {
-        $scope.player.registerLock(this);
 
+        this.$timeout = $timeout;
         this.lastLockInnerStep = 0;
         this.player = $scope.player;
         this.steps = 24;
@@ -13,6 +13,7 @@ export default class LockController {
         this.stepsNeeded = 1;
         this.succeeded = false;
 
+        $scope.player.registerLock(this);
         this.knob = document.getElementById('lock-knob-items');
 
         //this.handleDrag = function ($event) {
@@ -42,9 +43,60 @@ export default class LockController {
             preload: true
         });
 
+        //
+        //
+        //
+        //var test = document.getElementById('test');
+        ////var renderer = new PIXI.WebGLRenderer(300, 300);
+        //var renderer = PIXI.autoDetectRenderer(400, 300, {transparent: true}, true);
+        //
+        //// The renderer will create a canvas element for you that you can then insert into the DOM.
+        //test.appendChild(renderer.view);
+        //
+        //// You need to create a root container that will hold the scene you want to draw.
+        ////var stage = new PIXI.Container();
+        //var stage = new PIXI.Stage(0x66FF99);
+        //
+        //// This creates a texture from a 'bunny.png' image.
+        //var bunnyTexture = PIXI.Texture.fromImage('img/lock-knob.png');
+        //var bunny = new PIXI.Sprite(bunnyTexture);
+        //
+        //// Setup the position and scale of the bunny
+        //bunny.position.x = 150;
+        //bunny.position.y = 150;
+        //
+        //bunny.scale.x = 0.5;
+        //bunny.scale.y = 0.5;
+        //
+        //bunny.anchor.x = 0.5;
+        //bunny.anchor.y = 0.5;
+        //
+        //// Add the bunny to the scene we are building.
+        //stage.addChild(bunny);
+        //
+        //var self = this;
+        //var animate = () => {
+        //    //console.log(this);
+        //    //if (!this.currentAngle) {
+        //    //    return false;
+        //    //}
+        //
+        //    // start the timer for the next animation loop
+        //    requestAnimationFrame(animate);
+        //
+        //    // each frame we spin the bunny around a bit
+        //
+        //    //bunny.rotation = self.currentAngle * 0.0174532925;
+        //    bunny.rotation += 0.04
+        //
+        //    // this is the main render call that makes pixi draw your container and its children.
+        //    renderer.render(stage);
+        //};
+        //
+        //animate();
     }
 
-    touch($event) {
+    touch() {
         this.runs = false;
 
         var angle = this.currentAngle;
@@ -99,6 +151,11 @@ export default class LockController {
         this.nextStep(true);
     }
 
+    //render(){
+    //    this.knob.style[ionic.CSS.TRANSFORM] = 'rotate(' + this.currentAngle + 'deg)';
+    //    window.requestAnimationFrame(() => this.render());
+    //}
+
     nextStep(firstRun) {
         if (firstRun) {
             this.targetStep = getRandomIntInclusive(9, this.steps - 9);
@@ -107,11 +164,14 @@ export default class LockController {
         }
         this.targetPosition = this.targetStep * (360 / this.steps);
 
+        //window.requestAnimationFrame(() => this.render());
+
         //this.animationStart = Date.now();
 
-        this.knob.style[ionic.CSS.TRANSFORM] = 'rotate(' + this.targetPosition + 'deg)';
+        this.currentAngle = this.targetPosition;
+        this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + this.targetPosition + 'deg)';
 
-        var timePerStep = 150;
+        var timePerStep = 140;
         var targetDeg = -this.tolerance;
         var timeTotal = this.targetStep * timePerStep;
 
@@ -119,7 +179,7 @@ export default class LockController {
             targetDeg = 360 + this.tolerance;
             timeTotal = (this.steps - this.targetStep) * timePerStep;
         }
-        console.log('next step', targetDeg, this.step, this.targetPosition);
+        console.log('-------------- next step', targetDeg, this.step, this.targetPosition);
 
         this.runs = true;
         var self = this;
@@ -139,7 +199,7 @@ export default class LockController {
                 }
 
                 this.currentAngle = v;
-                this.knob.style[ionic.CSS.TRANSFORM] = 'rotate(' + v + 'deg)';
+                this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + v + 'deg)';
             })
             .on('complete', () => {
                 if (!this.runs) return;
@@ -149,9 +209,9 @@ export default class LockController {
                 this.onFailure();
             });
 
-        //$timeout(function(){
-        //    this.handleTouch();
-        //}, timeTotal + 30);
+        //this.$timeout(() => {
+        //    this.touch();
+        //}, timeTotal);
         this.lastAnimation.start();
     }
 

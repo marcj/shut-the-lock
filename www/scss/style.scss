@@ -175,6 +175,10 @@ html, body {
   background-image: url(../img/lock-knob.png);
   background-size: cover;
 
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+
   //-webkit-transition: transform 0.2s linear;
   //-webkit-transition-timing-function: linear;
   //transition-timing-function: linear;
