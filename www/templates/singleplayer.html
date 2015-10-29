@@ -1,10 +1,17 @@
 <ion-pane>
+
+    <div class="bar bar-header fullscreen-header">
+        <button class="button button-icon icon ion-ios-arrow-left" on-touch="goBack()">Back</button>
+        <div class="h1 title"></div>
+        <button class="button button-icon">Leaderboard</button>
+    </div>
     <ion-content scroll="false" class="singleplayer"
                  on-touchstart="player.touch($event)"
                  ng-controller="SinglePlayerController as player"
                  ng-class="{'player-failed': player.failed}"
                  on-swipe-right="player.back()"
             >
+
         <h3 class="header">LEVEL {{player.level}}</h3>
 
         <!--<div id="test"></div>-->

@@ -41,6 +41,8 @@ export default class SinglePlayerController {
         if (!this.levelDescription) {
             this.levelDescription = 'OMFG!';
         }
+
+        this.submitScore();
     }
 
     registerLock(lock) {

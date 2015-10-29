@@ -158,10 +158,19 @@ html, body {
   right: 0;
 }
 
+.fullscreen-header {
+  background-image: none !important;
+  background: transparent !important;
+
+  .button {
+    color: white;
+  }
+}
+
 .header {
   color: white;
   position: relative;
-  top: 25px;
+  top: 55px;
 }
 
 .player-failed {
