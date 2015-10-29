@@ -97,6 +97,18 @@ html, body {
   min-width: 285px;
 }
 
+.lock-small {
+  background-position: center -50px !important;
+  height: 333.5px !important;
+  .lock {
+    top: 42px;
+  }
+}
+
+.lock-inversed {
+  transform: rotate(180deg);
+}
+
 //.no-transition {
 //  -webkit-transition: none !important;
 //  transition: none !important;

@@ -46,6 +46,10 @@ lockMe.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('singleplayer', {
             url: '/singleplayer',
             templateUrl: 'templates/singleplayer.html'
+        })
+        .state('multiplayer', {
+            url: '/multiplayer',
+            templateUrl: 'templates/multiplayer.html'
         });
 
     //$locationProvider.html5Mode(true).hashPrefix('!');

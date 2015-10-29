@@ -17,6 +17,7 @@ export default class SinglePlayerController {
             'It is getting serious', //70-79
             'Ok, interesting', //80-89
             'Are you serious?', //90-99
+            'Crazy god?', //90-99
         ];
 
         this.setLevel(window.localStorage['singleplayerLevel'] || 1);
@@ -38,10 +39,9 @@ export default class SinglePlayerController {
         }
 
         if (!this.levelDescription) {
-            this.levelDescription = 'Crazy dog!';
+            this.levelDescription = 'OMFG!';
         }
     }
-
 
     registerLock(lock) {
         this.lock = lock;

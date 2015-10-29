@@ -1,0 +1,30 @@
+<ion-pane>
+    <ion-content scroll="false" class="singleplayer"
+                 on-touchstart="player.touch($event)"
+                 ng-controller="SinglePlayerController as player"
+                 ng-class="{'player-failed': player.failed}"
+                 on-swipe-right="player.back()"
+            >
+        <div class="lock-outline lock-small lock-inversed" ng-controller="LockController as lock1">
+            <div class="lock">
+                <div class="lock-knob">
+                    <div class="lock-knob-items" id="lock-knob-items"
+                         ng-class="{&apos;no-transition&apos;: !runs}"></div>
+                </div>
+                <div class="lock-counter"></div>
+                <div class="lock-arrow"></div>
+            </div>
+        </div>
+
+        <div class="lock-outline lock-small" ng-controller="LockController as lock2">
+            <div class="lock">
+                <div class="lock-knob">
+                    <div class="lock-knob-items" id="lock-knob-items2"
+                         ng-class="{&apos;no-transition&apos;: !runs}"></div>
+                </div>
+                <div class="lock-counter"></div>
+                <div class="lock-arrow"></div>
+            </div>
+        </div>
+    </ion-content>
+</ion-pane>
