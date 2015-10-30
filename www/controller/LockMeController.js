@@ -8,5 +8,15 @@ export default class LockMeController {
             console.log('go back');
             $ionicHistory.goBack();
         };
+        $scope.showLeaderboard = this.showLeaderboard;
+    }
+
+    showLeaderboard() {
+        var data = {
+            leaderboardId: "singleplayer"
+        };
+        window.gamecenter.showLeaderboard(function () {
+        }, function () {
+        }, data);
     }
 }

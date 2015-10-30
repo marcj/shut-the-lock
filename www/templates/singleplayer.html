@@ -3,64 +3,60 @@
     <div class="bar bar-header fullscreen-header">
         <button class="button button-icon icon ion-ios-arrow-left" on-touch="goBack()">Back</button>
         <div class="h1 title"></div>
-        <button class="button button-icon">Leaderboard</button>
+        <button class="button button-icon" on-touch="showLeaderboard()">Leaderboard</button>
     </div>
+
     <ion-content scroll="false" class="singleplayer"
                  on-touchstart="player.touch($event)"
                  ng-controller="SinglePlayerController as player"
                  ng-class="{'player-failed': player.failed}"
-                 on-swipe-right="player.back()"
+                 on-swipe-right="goBack()"
+                 style="padding-top: 50px;"
             >
-
-        <h3 class="header">LEVEL {{player.level}}</h3>
-
-        <!--<div id="test"></div>-->
-
-        <div class="lock-outline" ng-controller="LockController as lock">
-            <div class="lock">
-                <div class="lock-knob">
-                    <div class="lock-knob-items" id="lock-knob-items"
-                         ng-class="{&apos;no-transition&apos;: !runs}"></div>
+        <table>
+            <tr><td height="50px">
+                    <h3 class="header">LEVEL {{player.level}}</h3>
+            </td></tr>
+            <tr><td>
+                <div class="cell-wrapper">
+                    <div class="cell-container">
+                        <div data-lock></div>
+                    </div>
                 </div>
-                <div class="lock-counter">{{lock.stepsNeeded}}</div>
-                <div class="lock-arrow"></div>
-            </div>
-        </div>
+            </td></tr>
+            <tr><td height="151px">
 
-        <div ng-if="player.failed" class="lock-failed no-padding row row-bottom">
-            <div class="col">
-                <div class="level-label">
-                    <h4>FAILED</h4>
-                </div>
-                <a on-touch="player.restart()" class="button button-full button-bottom">
-                    Retry
-                </a>
-            </div>
-        </div>
-
-        <div ng-if="player.succeeded" class="lock-succeeded no-padding row row-bottom">
-            <div class="col">
-                <div class="level-label">
-                    <h4>LEVEL {{player.level}}</h4>
-                    {{player.levelDescription}}
+                <div ng-if="player.failed">
+                    <div class="level-label">
+                        <h4>FAILED</h4>
+                    </div>
+                    <a on-touch="player.restart()" class="button button-full button-bottom">
+                        Retry
+                    </a>
                 </div>
 
-                <a on-touch="player.restart()" class="button button-full button-bottom">
-                    Next
-                </a>
-            </div>
-        </div>
 
-        <div ng-if="!player.active" class="lock-succeeded no-padding row row-bottom">
-            <div class="col">
-                <div class="level-label">
-                    <h4>LEVEL {{player.level}}</h4>
-                    {{player.levelDescription}}
+                <div ng-if="player.succeeded">
+                    <div class="level-label">
+                        <h4>LEVEL {{player.level}}</h4>
+                        {{player.levelDescription}}
+                    </div>
+
+                    <a on-touch="player.restart()" class="button button-full button-bottom">
+                        Next
+                    </a>
                 </div>
-                <a class="button button-full button-bottom">
-                    Start
-                </a>
-            </div>
-        </div>
+
+                <div ng-if="!player.active" >
+                    <div class="level-label">
+                        <h4>LEVEL {{player.level}}</h4>
+                        {{player.levelDescription}}
+                    </div>
+                    <a class="button button-full button-bottom">
+                        Start
+                    </a>
+                </div>
+            </td></tr>
+        </table>
     </ion-content>
 </ion-pane>

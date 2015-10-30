@@ -1,3 +1,5 @@
+import {getRandomIntInclusive} from '../utils';
+
 export default class SinglePlayerController {
     constructor($scope, $timeout, $state) {
         this.$timeout = $timeout;
@@ -19,6 +21,27 @@ export default class SinglePlayerController {
             'Are you serious?', //90-99
             'Crazy god?', //90-99
         ];
+
+        ion.sound({
+            sounds: [
+                {
+                    name: "lock2"
+                },
+                {
+                    name: "lock3"
+                    //volume: 0.2
+                },
+                {
+                    name: "lock_unlock"
+                    //volume: 0.3,
+                    //preload: false
+                }
+            ],
+            volume: 1,
+            path: "sounds/",
+            multiplay: true,
+            preload: true
+        });
 
         this.setLevel(window.localStorage['singleplayerLevel'] || 1);
     }
@@ -46,15 +69,19 @@ export default class SinglePlayerController {
     }
 
     registerLock(lock) {
+        console.log('lock registered', lock);
         this.lock = lock;
         this.lock.stepsNeeded = this.level;
     }
 
     touch($event) {
+        console.log('player::touch', this.active);
+
         if (!this.active) {
             this.start();
             return;
         }
+
 
         console.log('touch', this.active, this.lock.runs);
 
@@ -73,10 +100,20 @@ export default class SinglePlayerController {
 
     onSuccess() {
         this.$timeout(() => {
-            this.succeeded = true;
-            this.level++;
-            window.localStorage['singleplayerLevel'] = this.level;
-            this.setLevel(this.level);
+
+            this.lock.stepsNeeded--;
+            if (0 === this.lock.stepsNeeded) {
+                ion.sound.play("lock_unlock");
+
+                this.succeeded = true;
+                this.level++;
+                window.localStorage['singleplayerLevel'] = this.level;
+                this.setLevel(this.level);
+            } else {
+                ion.sound.play("lock" + getRandomIntInclusive(2, 3));
+                this.lock.nextStep();
+            }
+
         }, 1);
     }
 
@@ -126,14 +163,5 @@ export default class SinglePlayerController {
         //this.$timeout(() => {
         //    this.blocked = false;
         //}, 340);
-    }
-
-    showLeaderboard() {
-        var data = {
-            leaderboardId: "singleplayer"
-        };
-        window.gamecenter.showLeaderboard(function () {
-        }, function () {
-        }, data);
     }
 }

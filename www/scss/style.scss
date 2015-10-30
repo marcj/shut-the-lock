@@ -29,6 +29,7 @@ html, body {
 }
 
 .level-label {
+  position: relative;
   font-family: "Aller";
   font-size: 22px;
   line-height: 28px;
@@ -60,6 +61,14 @@ html, body {
   line-height: 35px;
   color: white;
   border-radius: 15px;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &.activated {
+    background-color: #47e6c4;
+  }
 }
 
 .button.button-bottom {
@@ -70,6 +79,11 @@ html, body {
   background-color: #47e6c4;
   margin: 0;
   padding: 20px 0;
+}
+
+.button.button-bottom-small {
+  padding: 5px 0;
+  font-size: 24px;
 }
 
 .pane {
@@ -86,24 +100,254 @@ html, body {
   display: block;
 }
 
-.lock-outline {
-  position: relative;
-  background-image: url(../img/lock-outline.png);
-  background-size: cover;
-  max-width: (867px/2);
-  height: (867px/2);
-  background-position: center top;
-  margin: auto;
-  min-width: 285px;
-}
 
-.lock-small {
-  background-position: center -50px !important;
-  height: 333.5px !important;
-  .lock {
-    top: 42px;
+
+
+
+
+
+
+
+
+
+
+[data-lock], [data-multi-player-lock] {
+  max-width: 574px;
+  max-height: 574px;
+  position: relative;
+  display: inline-block;
+  float: left;
+
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  //
+  //&:after {
+  //  content: ".";
+  //  clear: both;
+  //  display: block;
+  //  visibility: hidden;
+  //  height: 0px;
+  //}
+
+  img {
+    max-width: 80%;
+    max-height: 80%;
   }
 }
+
+.lock-knob {
+  background-image: url(../img/lock-knob.png);
+  height: 100%;
+  background-size: 52%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.lock-counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  td {
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 75px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #45cfb0;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  }
+
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  td {
+     padding: 0;
+    vertical-align: middle;
+  }
+  .cell-wrapper {
+    height: 100%;
+    position: relative;
+  }
+
+  .cell-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+}
+
+.multiplayer-locks {
+
+  height: 50px;
+
+  .dark {
+    background-color: #72368C;
+    a {
+      color: white;
+    }
+    a:before {
+      padding-right: 4px;
+    }
+  }
+
+  border-top: 1px solid #9956B5;
+  border-bottom: 1px solid #9956B5;
+
+  //.multiplayer-locks-container {
+  //  background-color: #8e44ad;
+  //  display: inline-block;
+  //  margin: auto;
+  //  padding: 0 25px;
+  //  height: 44px;
+  //}
+
+  span {
+    font-size: 42px;
+    margin-left: 5px;
+    display: inline-block;
+    color: #9956B5;
+  }
+
+  span.active {
+    color: white;
+  }
+
+}
+
+.multiplayer-container {
+  h4 {
+    color: #6D2B88;
+  }
+}
+
+.button-ready {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0;
+
+  .button {
+    width: 100%;
+    background-color: #47e6c4;
+    border: 0;
+  }
+}
+
+.count-down {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  h4 {
+    font-size: 133px;
+    color: rgba(142, 68, 173, 0.64);
+  }
+}
+
+.finish-band {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0;
+
+  h3 {
+    font-family: "Aller";
+    font-size: 42px;
+    line-height: 48px;
+    font-style: normal;
+    font-weight: 700;
+  }
+  .button {
+    width: 100%;
+    background-color: #47e6c4;
+    border: 0;
+  }
+}
+
+.finish-won  {
+  background-color: #3BCCAD;
+}
+
+.finish-lost {
+  background-color: #e74c3c;
+}
+
+.hearts {
+  position: absolute;
+  right: 15px;
+  top: 22px;
+  width: 20px;
+  font-size: 26px;
+  color: #652B7D;
+  .ion-heart-broken {
+    color: #722B90;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+//$smallFactor: 2.8;
+
+
+//.lock-outline.lock-small {
+//  background-position: center -50px !important;
+//  width: (867px/$smallFactor);
+//  height: (867px/$smallFactor);
+//
+//  .lock {
+//    transform: scale(.72);
+//    top: -22px;
+//  //  width: (529px/$smallFactor);
+//  //  height: (528px/$smallFactor);
+//  }
+//  //
+//  //.lock-arrow {
+//  //  left: 90px;
+//  //  width: (74px/$smallFactor);
+//  //  height: (69px/$smallFactor);
+//  //}
+//  //
+//  //.lock-knob {
+//  //  top: 15px;
+//  //  width: (400px/$smallFactor);
+//  //  height: (400px/$smallFactor);
+//  //}
+//  //
+//  //.lock-knob-items {
+//  //  width: (357px/$smallFactor);
+//  //  height: (357px/$smallFactor);
+//  //}
+//  //
+//  //
+//  //.lock-counter {
+//  //  width: (150px/$smallFactor);
+//  //  height: (150px/$smallFactor);
+//  //}
+//}
 
 .lock-inversed {
   transform: rotate(180deg);
@@ -114,41 +358,41 @@ html, body {
 //  transition: none !important;
 //}
 
-.lock {
-  margin: auto;
-  width: (529px/2);
-  height: (528px/2);
-
-  position: relative;
-  top: 92px;
-
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  -webkit-perspective: 1000;
-
-  background-image: url(../img/lock-bg.png);
-  background-size: cover;
-}
-
-.lock-arrow {
-  width: (74px/2);
-  height: (69px/2);
-  position: absolute;
-  top: 0;
-  left: 113px;
-  background-image: url(../img/lock-arrow.png);
-  background-size: cover;
-}
-
-.lock-knob {
-  width: 200px;
-  height: 200px;
-  margin: auto;
-  position: relative;
-  top: 25px;
-  background-image: url(../img/lock-knob-bg.png);
-  background-size: cover;
-}
+//.lock {
+//  margin: auto;
+//  width: (529px/2);
+//  height: (528px/2);
+//
+//  position: relative;
+//  top: 92px;
+//
+//  -webkit-transform: translate3d(0, 0, 0);
+//  -webkit-backface-visibility: hidden;
+//  -webkit-perspective: 1000;
+//
+//  background-image: url(../img/lock-bg.png);
+//  background-size: cover;
+//}
+//
+//.lock-arrow {
+//  width: (74px/2);
+//  height: (69px/2);
+//  position: absolute;
+//  top: 0;
+//  left: 113px;
+//  background-image: url(../img/lock-arrow.png);
+//  background-size: cover;
+//}
+//
+//.lock-knob {
+//  width: (400px/2);
+//  height: (400px/2);
+//  margin: auto;
+//  position: relative;
+//  top: 25px;
+//  background-image: url(../img/lock-knob-bg.png);
+//  background-size: cover;
+//}
 
 .lock-failed {
   position: absolute;
@@ -169,8 +413,6 @@ html, body {
 
 .header {
   color: white;
-  position: relative;
-  top: 55px;
 }
 
 .player-failed {
@@ -185,34 +427,34 @@ html, body {
   right: 0;
 }
 
-.lock-knob-items {
-  width: (357px/2);
-  height: (357px/2);
-
-  position: relative;
-  top: 11px;
-  left: 11px;
-
-  background-image: url(../img/lock-knob.png);
-  background-size: cover;
-
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  -webkit-perspective: 1000;
-
-  //-webkit-transition: transform 0.2s linear;
-  //-webkit-transition-timing-function: linear;
-  //transition-timing-function: linear;
-  //transition: transform 0.2s linear;
-  //-moz-transition: transform 0.2s;
-  //-ms-transition: transform 0.2s;
-  //-o-transition: transform 0.2s;
-
-  //animation-name: spin;
-  //animation-duration: 4000ms;
-  //animation-iteration-count: infinite;
-  //animation-timing-function: linear;
-}
+//.lock-knob-items {
+//  width: (357px/2);
+//  height: (357px/2);
+//
+//  position: relative;
+//  top: 11px;
+//  left: 11px;
+//
+//  background-image: url(../img/lock-knob.png);
+//  background-size: cover;
+//
+//  -webkit-transform: translate3d(0, 0, 0);
+//  -webkit-backface-visibility: hidden;
+//  -webkit-perspective: 1000;
+//
+//  //-webkit-transition: transform 0.2s linear;
+//  //-webkit-transition-timing-function: linear;
+//  //transition-timing-function: linear;
+//  //transition: transform 0.2s linear;
+//  //-moz-transition: transform 0.2s;
+//  //-ms-transition: transform 0.2s;
+//  //-o-transition: transform 0.2s;
+//
+//  //animation-name: spin;
+//  //animation-duration: 4000ms;
+//  //animation-iteration-count: infinite;
+//  //animation-timing-function: linear;
+//}
 
 @keyframes spin {
   from {
@@ -223,21 +465,28 @@ html, body {
   }
 }
 
-.lock-counter {
-  width: (150px/2);
-  height: (150px/2);
+//.lock-counter {
+//  width: (150px/2);
+//  height: (150px/2);
+//
+//  line-height: 75px;
+//  text-align: center;
+//  font-size: 32px;
+//  font-weight: bold;
+//  color: #45cfb0;
+//  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+//
+//  position: absolute;
+//  top: 86px;
+//  left: 95px;
+//
+//  background-image: url(../img/lock-counter.png);
+//  background-size: cover;
+//}
 
-  line-height: 75px;
-  text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-  color: #45cfb0;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 
-  position: absolute;
-  top: 86px;
-  left: 95px;
+.multiplayer-player1 {
+}
 
-  background-image: url(../img/lock-counter.png);
-  background-size: cover;
+.multiplayer-player2 {
 }
