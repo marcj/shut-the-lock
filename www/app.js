@@ -16,7 +16,7 @@ lockMe.controller('MultiPlayerHardController', MultiPlayerHardController);
 lockMe.controller('LockController', LockController);
 lockMe.controller('MultiPlayerLockController', MultiPlayerLockController);
 
-var run = function ($ionicPlatform, $cordovaStatusbar) {
+var run = function ($rootScope, $ionicPlatform, $cordovaStatusbar) {
     $ionicPlatform.ready(function () {
 
         if (/(android)/i.test(navigator.userAgent)) {
@@ -25,7 +25,7 @@ var run = function ($ionicPlatform, $cordovaStatusbar) {
             //    interstitial: 'ca-app-pub-6869992474017983/1657046752'
             //};
         } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-            admobid = { // for iOS
+            var admobid = { // for iOS
                 //banner: 'ca-app-pub-6869992474017983/4806197152',
                 //interstitial: 'ca-app-pub-6869992474017983/7563979554'
                 banner: 'ca-app-pub-9185193917550750/7060893423',
@@ -102,6 +102,15 @@ var run = function ($ionicPlatform, $cordovaStatusbar) {
         }
         if (window.StatusBar) {
             StatusBar.styleDefault();
+        }
+
+        if (window.gamecenter) {
+            window.gamecenter.auth(function (user) {
+                $scope.gamercenterLoggedIn = true;
+                console.log('gamecenter success', user)
+            }, function (e) {
+                console.error('gamecenter error', e)
+            });
         }
 
         $cordovaStatusbar.hide();
