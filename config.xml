@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="de.marcjschmidt.unlockme" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="de.marcjschmidt.unlockme" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Shut The Lock</name>
   <description>
-      Mini game where you need to unlock the lock.
+      Mini game where you need to shut the lock.
   </description>
   <author email="marc@marcjschmidt.de" href="http://marcjschmidt.de/">
     Marc J. Schmidt

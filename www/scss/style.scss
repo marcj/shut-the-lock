@@ -149,6 +149,39 @@ html, body {
   right: 0;
 }
 
+.lock-knob-red {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: url(../img/lock-knob-red.png);
+  height: 100%;
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0;
+}
+
+@keyframes failed {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.lock-knob-red.visible {
+  border-radius: 555px;
+  animation-name: failed;
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+}
+
 .lock-counter {
   position: absolute;
   top: 0;

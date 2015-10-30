@@ -3,7 +3,8 @@
     <div class="bar bar-header fullscreen-header">
         <button class="button button-icon icon ion-ios-arrow-left" on-touch="goBack()">Back</button>
         <div class="h1 title"></div>
-        <button class="button button-icon" on-touch="showLeaderboard()">Leaderboard</button>
+        <button ng-if="gamercenterLoggedIn" class="button button-icon" on-touch="showLeaderboard()">Leaderboard</button>
+        <button ng-if="!gamercenterLoggedIn" class="button button-icon" on-touch="loginGameCenter()">Gamecenter Login</button>
     </div>
 
     <ion-content scroll="false" class="singleplayer"

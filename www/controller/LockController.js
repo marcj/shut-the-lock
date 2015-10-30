@@ -13,7 +13,8 @@ export default class LockController {
 
         $scope.lock = this;
         $scope.player.registerLock(this);
-        this.knob = window.angular.element($element).children()[1];
+        this.knobRed = window.angular.element($element).children()[1];
+        this.knob = window.angular.element($element).children()[2];
 
         //this.handleDrag = function ($event) {
         //    this.lockInnerStep = Math.floor(this.lastLockInnerStep + $event.gesture.deltaY);
@@ -56,6 +57,12 @@ export default class LockController {
     }
 
     onFailure(){
+        this.knobRed.classList.add('visible');
+
+        this.$timeout(() => {
+            this.knobRed.classList.remove('visible');
+        }, 400);
+
         this.$timeout(() => {
             this.player.onFailed(this);
         }, 1);
