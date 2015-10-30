@@ -18,7 +18,14 @@ lockMe.controller('MultiPlayerLockController', MultiPlayerLockController);
 
 var run = function ($ionicPlatform, $cordovaStatusbar) {
     $ionicPlatform.ready(function () {
-        $cordovaStatusbar.hide();
+
+        if (window.gamecenter) {
+            window.gamecenter.auth(function (user) {
+                console.log('gamecenter success', user)
+            }, function (e) {
+                console.error('gamecenter error', e)
+            });
+        }
 
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -29,14 +36,7 @@ var run = function ($ionicPlatform, $cordovaStatusbar) {
             StatusBar.styleDefault();
         }
 
-        if (window.gamecenter) {
-            window.gamecenter.auth(function (user) {
-                console.log('gamecenter success', user)
-            }, function (e) {
-                console.error('gamecenter error', e)
-            });
-        }
-
+        $cordovaStatusbar.hide();
     });
 };
 lockMe.run(run);
