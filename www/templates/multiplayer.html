@@ -13,8 +13,8 @@
                             <h4>Player 2</h4>
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
-                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(2)" ng-click="player.setReady(2, true)" class="button button-bottom button-bottom-small">Ready?</button>
-                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(2)" ng-click="player.setReady(2, false)" class="button button-bottom button-bottom-small button-balanced">Ready!</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(2)" on-touch="player.setReady(2, true)" class="button button-bottom button-bottom-small">Ready?</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(2)" on-touch="player.setReady(2, false)" class="button button-bottom button-bottom-small button-balanced">Ready!</button>
                             </div>
                             <div ng-if="player.hard" class="hearts">
                                 <span ng-class="{'ion-heart-broken': player.getLives(2) < 1, 'ion-heart': player.getLives(2) >= 1}"></span>
@@ -28,11 +28,11 @@
 
                             <div class="finish-band finish-band-won" ng-if="player.playerWon === 2">
                                 <h3>YOU WIN!</h3>
-                                <button class="button" ng-click="player.restart()">New Round</button>
+                                <button class="button" on-touch="player.restart()">New Round</button>
                             </div>
                             <div class="finish-band finish-band-lost" ng-if="player.playerWon === 1">
                                 <h3>YOU LOSE!</h3>
-                                <button class="button button-bottom button-bottom-small" ng-click="player.restart()">New Round</button>
+                                <button class="button button-bottom button-bottom-small" on-touch="player.restart()">New Round</button>
                             </div>
                         </div>
                     </div>
@@ -45,11 +45,11 @@
                                 <td class="dark" width="22%">
                                     <a class="icon ion-ios-arrow-left" on-touch="goBack()">Back</a></td>
                                 <td>
-                                    <span class="ion-key" ng-click="player.setActiveKeys(1)" ng-class="{'active':player.isKeyOpen(1)}"></span>
-                                    <span class="ion-key" ng-click="player.setActiveKeys(2)" ng-class="{'active':player.isKeyOpen(2)}"></span>
-                                    <span class="ion-key" ng-click="player.setActiveKeys(3)" ng-class="{'active':player.isKeyOpen(3)}"></span>
-                                    <span class="ion-key" ng-click="player.setActiveKeys(4)" ng-class="{'active':player.isKeyOpen(4)}"></span>
-                                    <span class="ion-key" ng-click="player.setActiveKeys(5)" ng-class="{'active':player.isKeyOpen(5)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(1)" ng-class="{'active':player.isKeyOpen(1)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(2)" ng-class="{'active':player.isKeyOpen(2)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(3)" ng-class="{'active':player.isKeyOpen(3)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(4)" ng-class="{'active':player.isKeyOpen(4)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(5)" ng-class="{'active':player.isKeyOpen(5)}"></span>
                                     <span class="ion-key" ng-class="{'active':player.isKeyOpen(6)}"></span>
                                 </td>
                                 <td class="dark" width="22%"></td>
@@ -68,8 +68,8 @@
                             <h4>Player 1</h4>
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
-                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(1)" ng-click="player.setReady(1, true)" class="button button-bottom button-bottom-small">Ready?</button>
-                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(1)" ng-click="player.setReady(1, false)" class="button button-bottom button-bottom-small button-balanced">Ready!</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(1)" on-touch="player.setReady(1, true)" class="button button-bottom button-bottom-small">Ready?</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(1)" on-touch="player.setReady(1, false)" class="button button-bottom button-bottom-small button-balanced">Ready!</button>
                             </div>
 
                             <div ng-if="player.hard" class="hearts">
@@ -84,11 +84,11 @@
 
                             <div class="finish-band finish-band-won" ng-if="player.playerWon === 1">
                                 <h3>YOU WIN!</h3>
-                                <button class="button button-bottom" ng-click="player.restart()">New Round</button>
+                                <button class="button button-bottom" on-touch="player.restart()">New Round</button>
                             </div>
                             <div class="finish-band finish-band-lost" ng-if="player.playerWon === 2">
                                 <h3>YOU LOSE!</h3>
-                                <button class="button button-bottom-small" ng-click="player.restart()">New Round</button>
+                                <button class="button button-bottom-small" on-touch="player.restart()">New Round</button>
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,10 @@ html, body {
   font-family: "Aller";
 }
 
+
+$actionButton: #47e6c4;
+//$actionButton: #e1a51b;
+
 @font-face {
   font-family: "Aller";
   src: url("../font/Aller_Bd.ttf") format("opentype");
@@ -33,7 +37,7 @@ html, body {
   font-family: "Aller";
   font-size: 22px;
   line-height: 28px;
-  color: #47e6c4;
+  color: $actionButton;
   font-style: italic;
 
   padding-bottom: 25px;
@@ -49,8 +53,12 @@ html, body {
   }
 }
 
+.button {
+  border: 0;
+}
+
 .button.button-big {
-  background-color: #47e6c4;
+  background-color: $actionButton;
   display: block;
   width: 90%;
   margin: 15px 20px;
@@ -67,7 +75,7 @@ html, body {
   }
 
   &.activated {
-    background-color: #47e6c4;
+    background-color: $actionButton;
   }
 }
 
@@ -76,7 +84,7 @@ html, body {
   font-family: "Aller";
   font-size: 28px;
   color: white;
-  background-color: #47e6c4;
+  background-color: $actionButton;
   margin: 0;
   padding: 20px 0;
 }
@@ -114,9 +122,8 @@ html, body {
 [data-lock], [data-multi-player-lock] {
   max-width: 574px;
   max-height: 574px;
-  position: relative;
-  display: inline-block;
-  float: left;
+
+  margin: auto;
 
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
@@ -278,7 +285,7 @@ table {
 
   .button {
     width: 100%;
-    background-color: #47e6c4;
+    background-color: $actionButton;
     border: 0;
   }
 }
@@ -309,7 +316,7 @@ table {
   }
   .button {
     width: 100%;
-    background-color: #47e6c4;
+    background-color: $actionButton;
     border: 0;
   }
 }
@@ -522,4 +529,18 @@ table {
 }
 
 .multiplayer-player2 {
+}
+
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+  /* iPhone 5 */
+
+  .level-label {
+    padding-bottom: 8px;
+
+  }
+
 }
