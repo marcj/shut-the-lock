@@ -120,10 +120,10 @@ export default class MultiPlayerController {
             if (this.lives[player] <= 0) {
                 this.finished(player === 1 ? 2 : 1);
             } else {
-                lock.nextStep();
+                lock.nextStep(true);
             }
         } else {
-            lock.nextStep();
+            lock.nextStep(true);
         }
     }
 

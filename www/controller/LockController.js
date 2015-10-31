@@ -9,12 +9,20 @@ export default class LockController {
         this.tolerance = 7;
         this.lastAnimation = null;
         this.runs = false;
-        this.stepsNeeded = 1;
+        //this.stepsNeeded = 1;
+        this.currentAngle = 0;
+        this.targetStep = 0;
+        this.lastStep = 0; //helper var to determine the needed steps per round
+
+        $scope.$on('$destroy', () => {
+            this.stop()
+        });
 
         $scope.lock = this;
         $scope.player.registerLock(this);
         this.knobRed = window.angular.element($element).children()[1];
         this.knob = window.angular.element($element).children()[2];
+        this.arrow = window.angular.element($element).children()[3];
 
         //this.handleDrag = function ($event) {
         //    this.lockInnerStep = Math.floor(this.lastLockInnerStep + $event.gesture.deltaY);
@@ -26,7 +34,7 @@ export default class LockController {
     touch() {
         this.runs = false;
 
-        var angle = this.currentAngle;
+        var angle = this.targetPosition-this.currentAngle;
         if (this.lastAnimation) {
             this.lastAnimation.destroy();
         }
@@ -54,12 +62,14 @@ export default class LockController {
 
     reset(){
         this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(0deg)';
+        this.arrow.style[ionic.CSS.TRANSFORM] = 'rotateZ(0deg)';
+        this.currentAngle = 0;
     }
 
     onFailure(){
         this.knobRed.classList.add('visible');
 
-        this.$timeout(() => {
+        setTimeout(() => {
             this.knobRed.classList.remove('visible');
         }, 400);
 
@@ -69,9 +79,7 @@ export default class LockController {
     }
 
     onSuccess(){
-        this.$timeout(() => {
-            this.player.onSuccess(this);
-        }, 1);
+        this.player.onSuccess(this);
     }
 
     start(){
@@ -83,49 +91,71 @@ export default class LockController {
     //    window.requestAnimationFrame(() => this.render());
     //}
 
-    nextStep(firstRun) {
-        if (firstRun) {
-            this.targetStep = getRandomIntInclusive(9, this.steps - 9);
-        } else {
-            this.targetStep = getRandomIntInclusive(3, this.steps - 3);
+    nextStep(bigDiff) {
+        this.direction = (this.direction === 'left') ? 'right' : 'left';
+
+        var diff = 6;
+        var minDiff = 3;
+        if (bigDiff) {
+            minDiff = 7;
+            diff = 11;
         }
+
+        if (this.direction === 'left') {
+            this.targetStep = getRandomIntInclusive(this.targetStep-diff, this.targetStep-minDiff);
+        } else {
+            this.targetStep = getRandomIntInclusive(this.targetStep+minDiff, this.targetStep+diff);
+        }
+
         this.targetPosition = this.targetStep * (360 / this.steps);
 
-        //window.requestAnimationFrame(() => this.render());
-
-        //this.animationStart = Date.now();
-
-        this.currentAngle = this.targetPosition;
         this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + this.targetPosition + 'deg)';
 
         var timePerStep = 140;
-        var targetDeg = -this.tolerance;
-        var timeTotal = this.targetStep * timePerStep;
+        var stepsNeeded = Math.abs(this.lastStep-this.targetStep);
+        var timeTotal = stepsNeeded * timePerStep;
 
-        if (this.targetStep > this.steps / 2) {
-            targetDeg = 360 + this.tolerance;
-            timeTotal = (this.steps - this.targetStep) * timePerStep;
-        }
-        //console.log('-------------- next step', targetDeg, this.step, this.targetPosition);
+        this.lastStep = this.targetStep;
 
         this.runs = true;
+        var lastLoop = new Date;
+        var oldFps = 0;
+        var debug = document.getElementById('debug');
+        var startedAngle = this.currentAngle;
+
+        console.log('targetStep=', this.targetStep, 'stepsNeeded=', stepsNeeded, 'currentAngle', this.currentAngle, 'targetPosition=', this.targetPosition);
+
+        var from = this.currentAngle;
+        var to = this.targetPosition;
+
+        if (this.currentAngle > this.targetPosition) { //0 / -30
+            //to left
+            //from = from - this.tolerance;
+            to = to - this.tolerance;
+        } else {
+            to = to + this.tolerance;
+        }
+        var anglesNeeded = to-from;
+
         this.lastAnimation = collide.animation({
             duration: timeTotal,
             easing: 'linear'
         })
             .on('step', (v) => {
-
-                if (targetDeg < 0) {
-                    var buffer = this.targetPosition + Math.abs(targetDeg);
-                    v = buffer - (v * buffer);
-                    v += targetDeg;
-                } else {
-                    v = (v * (targetDeg - this.targetPosition));
-                    v += this.targetPosition;
-                }
+                v = anglesNeeded * v;
+                v += startedAngle;
 
                 this.currentAngle = v;
-                this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + v + 'deg)';
+                this.arrow.style[ionic.CSS.TRANSFORM] = 'rotate(' + this.currentAngle + 'deg)';
+
+                //var thisLoop = new Date;
+                //var newFps = 1000 / (thisLoop - lastLoop);
+                //
+                //var filteredValue = oldFps + (newFps - oldFps) / (100 / (thisLoop-lastLoop));
+                //
+                //lastLoop = thisLoop;
+                //oldFps = newFps;
+                //debug.innerHTML = filteredValue.toFixed(0) + ' FPS';
             })
             .on('complete', () => {
                 if (!this.runs) return;

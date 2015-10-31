@@ -187,7 +187,7 @@ lockMe.directive("lock", function () {
     return {
         scope: true,
         controller: _controllerLockController2['default'],
-        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
+        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-arrow"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
     };
 });
 
@@ -195,7 +195,7 @@ lockMe.directive("multiPlayerLock", function () {
     return {
         scope: true,
         controller: _controllerMultiPlayerLockController2['default'],
-        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
+        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-arrow"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
     };
 });
 
@@ -214,6 +214,8 @@ var _utils = require('../utils');
 
 var LockController = (function () {
     function LockController($scope, $element, $timeout) {
+        var _this = this;
+
         _classCallCheck(this, LockController);
 
         this.$timeout = $timeout;
@@ -223,12 +225,20 @@ var LockController = (function () {
         this.tolerance = 7;
         this.lastAnimation = null;
         this.runs = false;
-        this.stepsNeeded = 1;
+        //this.stepsNeeded = 1;
+        this.currentAngle = 0;
+        this.targetStep = 0;
+        this.lastStep = 0; //helper var to determine the needed steps per round
+
+        $scope.$on('$destroy', function () {
+            _this.stop();
+        });
 
         $scope.lock = this;
         $scope.player.registerLock(this);
         this.knobRed = window.angular.element($element).children()[1];
         this.knob = window.angular.element($element).children()[2];
+        this.arrow = window.angular.element($element).children()[3];
 
         //this.handleDrag = function ($event) {
         //    this.lockInnerStep = Math.floor(this.lastLockInnerStep + $event.gesture.deltaY);
@@ -242,7 +252,7 @@ var LockController = (function () {
         value: function touch() {
             this.runs = false;
 
-            var angle = this.currentAngle;
+            var angle = this.targetPosition - this.currentAngle;
             if (this.lastAnimation) {
                 this.lastAnimation.destroy();
             }
@@ -272,30 +282,28 @@ var LockController = (function () {
         key: 'reset',
         value: function reset() {
             this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(0deg)';
+            this.arrow.style[ionic.CSS.TRANSFORM] = 'rotateZ(0deg)';
+            this.currentAngle = 0;
         }
     }, {
         key: 'onFailure',
         value: function onFailure() {
-            var _this = this;
+            var _this2 = this;
 
             this.knobRed.classList.add('visible');
 
-            this.$timeout(function () {
-                _this.knobRed.classList.remove('visible');
+            setTimeout(function () {
+                _this2.knobRed.classList.remove('visible');
             }, 400);
 
             this.$timeout(function () {
-                _this.player.onFailed(_this);
+                _this2.player.onFailed(_this2);
             }, 1);
         }
     }, {
         key: 'onSuccess',
         value: function onSuccess() {
-            var _this2 = this;
-
-            this.$timeout(function () {
-                _this2.player.onSuccess(_this2);
-            }, 1);
+            this.player.onSuccess(this);
         }
     }, {
         key: 'start',
@@ -310,50 +318,73 @@ var LockController = (function () {
 
     }, {
         key: 'nextStep',
-        value: function nextStep(firstRun) {
+        value: function nextStep(bigDiff) {
             var _this3 = this;
 
-            if (firstRun) {
-                this.targetStep = (0, _utils.getRandomIntInclusive)(9, this.steps - 9);
-            } else {
-                this.targetStep = (0, _utils.getRandomIntInclusive)(3, this.steps - 3);
+            this.direction = this.direction === 'left' ? 'right' : 'left';
+
+            var diff = 6;
+            var minDiff = 3;
+            if (bigDiff) {
+                minDiff = 7;
+                diff = 11;
             }
+
+            if (this.direction === 'left') {
+                this.targetStep = (0, _utils.getRandomIntInclusive)(this.targetStep - diff, this.targetStep - minDiff);
+            } else {
+                this.targetStep = (0, _utils.getRandomIntInclusive)(this.targetStep + minDiff, this.targetStep + diff);
+            }
+
             this.targetPosition = this.targetStep * (360 / this.steps);
 
-            //window.requestAnimationFrame(() => this.render());
-
-            //this.animationStart = Date.now();
-
-            this.currentAngle = this.targetPosition;
             this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + this.targetPosition + 'deg)';
 
             var timePerStep = 140;
-            var targetDeg = -this.tolerance;
-            var timeTotal = this.targetStep * timePerStep;
+            var stepsNeeded = Math.abs(this.lastStep - this.targetStep);
+            var timeTotal = stepsNeeded * timePerStep;
 
-            if (this.targetStep > this.steps / 2) {
-                targetDeg = 360 + this.tolerance;
-                timeTotal = (this.steps - this.targetStep) * timePerStep;
-            }
-            //console.log('-------------- next step', targetDeg, this.step, this.targetPosition);
+            this.lastStep = this.targetStep;
 
             this.runs = true;
+            var lastLoop = new Date();
+            var oldFps = 0;
+            var debug = document.getElementById('debug');
+            var startedAngle = this.currentAngle;
+
+            console.log('targetStep=', this.targetStep, 'stepsNeeded=', stepsNeeded, 'currentAngle', this.currentAngle, 'targetPosition=', this.targetPosition);
+
+            var from = this.currentAngle;
+            var to = this.targetPosition;
+
+            if (this.currentAngle > this.targetPosition) {
+                //0 / -30
+                //to left
+                //from = from - this.tolerance;
+                to = to - this.tolerance;
+            } else {
+                to = to + this.tolerance;
+            }
+            var anglesNeeded = to - from;
+
             this.lastAnimation = collide.animation({
                 duration: timeTotal,
                 easing: 'linear'
             }).on('step', function (v) {
-
-                if (targetDeg < 0) {
-                    var buffer = _this3.targetPosition + Math.abs(targetDeg);
-                    v = buffer - v * buffer;
-                    v += targetDeg;
-                } else {
-                    v = v * (targetDeg - _this3.targetPosition);
-                    v += _this3.targetPosition;
-                }
+                v = anglesNeeded * v;
+                v += startedAngle;
 
                 _this3.currentAngle = v;
-                _this3.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + v + 'deg)';
+                _this3.arrow.style[ionic.CSS.TRANSFORM] = 'rotate(' + _this3.currentAngle + 'deg)';
+
+                //var thisLoop = new Date;
+                //var newFps = 1000 / (thisLoop - lastLoop);
+                //
+                //var filteredValue = oldFps + (newFps - oldFps) / (100 / (thisLoop-lastLoop));
+                //
+                //lastLoop = thisLoop;
+                //oldFps = newFps;
+                //debug.innerHTML = filteredValue.toFixed(0) + ' FPS';
             }).on('complete', function () {
                 if (!_this3.runs) return;
 
@@ -580,10 +611,10 @@ var MultiPlayerController = (function () {
                 if (this.lives[player] <= 0) {
                     this.finished(player === 1 ? 2 : 1);
                 } else {
-                    lock.nextStep();
+                    lock.nextStep(true);
                 }
             } else {
-                lock.nextStep();
+                lock.nextStep(true);
             }
         }
     }, {
@@ -796,21 +827,21 @@ var SinglePlayerController = (function () {
     }, {
         key: 'registerLock',
         value: function registerLock(lock) {
-            console.log('lock registered', lock);
+            //console.log('lock registered', lock);
             this.lock = lock;
             this.lock.stepsNeeded = this.level;
         }
     }, {
         key: 'touch',
         value: function touch($event) {
-            console.log('player::touch', this.active);
+            //console.log('player::touch', this.active);
 
             if (!this.active) {
                 this.start();
                 return;
             }
 
-            console.log('touch', this.active, this.lock.runs);
+            //console.log('touch', this.active, this.lock.runs);
 
             if (this.lock.runs) {
                 this.lock.touch($event);
@@ -828,50 +859,45 @@ var SinglePlayerController = (function () {
     }, {
         key: 'onSuccess',
         value: function onSuccess() {
-            var _this = this;
+            this.lock.stepsNeeded--;
+            if (0 === this.lock.stepsNeeded) {
+                ion.sound.play("lock_unlock");
 
-            this.$timeout(function () {
-
-                _this.lock.stepsNeeded--;
-                if (0 === _this.lock.stepsNeeded) {
-                    ion.sound.play("lock_unlock");
-
-                    _this.succeeded = true;
-                    _this.level++;
-                    window.localStorage['singleplayerLevel'] = _this.level;
-                    _this.setLevel(_this.level);
-                } else {
-                    ion.sound.play("lock" + (0, _utils.getRandomIntInclusive)(2, 3));
-                    _this.lock.nextStep();
-                }
-            }, 1);
+                this.succeeded = true;
+                this.level++;
+                window.localStorage['singleplayerLevel'] = this.level;
+                this.setLevel(this.level);
+            } else {
+                ion.sound.play("lock" + (0, _utils.getRandomIntInclusive)(2, 3));
+                this.lock.nextStep();
+            }
         }
     }, {
         key: 'start',
         value: function start() {
-            var _this2 = this;
+            var _this = this;
 
             this.$timeout(function () {
-                _this2.active = true;
-                _this2.lock.stepsNeeded = _this2.level;
-                _this2.lock.start();
+                _this.active = true;
+                _this.lock.stepsNeeded = _this.level;
+                _this.lock.start();
             }, 1);
         }
     }, {
         key: 'restart',
         value: function restart() {
-            var _this3 = this;
+            var _this2 = this;
 
             if (this.blocked) {
                 return;
             }
-            console.log('restart');
+            //console.log('restart');
 
             this.$timeout(function () {
-                _this3.failed = false;
-                _this3.succeeded = false;
-                _this3.lock.stepsNeeded = _this3.level;
-                _this3.lock.nextStep(true);
+                _this2.failed = false;
+                _this2.succeeded = false;
+                _this2.lock.stepsNeeded = _this2.level;
+                _this2.lock.nextStep(true);
             }, 1);
         }
     }, {
@@ -890,12 +916,12 @@ var SinglePlayerController = (function () {
     }, {
         key: 'onFailed',
         value: function onFailed() {
-            var _this4 = this;
+            var _this3 = this;
 
-            console.log('failure');
+            //console.log('failure');
 
             this.$timeout(function () {
-                _this4.failed = true;
+                _this3.failed = true;
                 //this.blocked = true;
             }, 1);
 

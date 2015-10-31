@@ -69,13 +69,13 @@ export default class SinglePlayerController {
     }
 
     registerLock(lock) {
-        console.log('lock registered', lock);
+        //console.log('lock registered', lock);
         this.lock = lock;
         this.lock.stepsNeeded = this.level;
     }
 
     touch($event) {
-        console.log('player::touch', this.active);
+        //console.log('player::touch', this.active);
 
         if (!this.active) {
             this.start();
@@ -83,7 +83,7 @@ export default class SinglePlayerController {
         }
 
 
-        console.log('touch', this.active, this.lock.runs);
+        //console.log('touch', this.active, this.lock.runs);
 
         if (this.lock.runs) {
             this.lock.touch($event);
@@ -99,22 +99,18 @@ export default class SinglePlayerController {
     }
 
     onSuccess() {
-        this.$timeout(() => {
+        this.lock.stepsNeeded--;
+        if (0 === this.lock.stepsNeeded) {
+            ion.sound.play("lock_unlock");
 
-            this.lock.stepsNeeded--;
-            if (0 === this.lock.stepsNeeded) {
-                ion.sound.play("lock_unlock");
-
-                this.succeeded = true;
-                this.level++;
-                window.localStorage['singleplayerLevel'] = this.level;
-                this.setLevel(this.level);
-            } else {
-                ion.sound.play("lock" + getRandomIntInclusive(2, 3));
-                this.lock.nextStep();
-            }
-
-        }, 1);
+            this.succeeded = true;
+            this.level++;
+            window.localStorage['singleplayerLevel'] = this.level;
+            this.setLevel(this.level);
+        } else {
+            ion.sound.play("lock" + getRandomIntInclusive(2, 3));
+            this.lock.nextStep();
+        }
     }
 
     start() {
@@ -129,7 +125,7 @@ export default class SinglePlayerController {
         if (this.blocked) {
             return;
         }
-        console.log('restart');
+        //console.log('restart');
 
         this.$timeout(() => {
             this.failed = false;
@@ -153,7 +149,7 @@ export default class SinglePlayerController {
     }
 
     onFailed() {
-        console.log('failure');
+        //console.log('failure');
 
         this.$timeout(() => {
             this.failed = true;

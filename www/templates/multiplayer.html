@@ -10,7 +10,7 @@
                              ng-class="{'finish-won': player.playerWon === 2, 'finish-lost': player.playerWon === 1}"
                              on-touchstart="player.touch(2, $event)" style="padding: 10px 50px;">
 
-                            <h4>Player 2</h4>
+                            <h4>Player 2 - Crack Keys</h4>
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
                                 <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(2)" on-touch="player.setReady(2, true)" class="button button-bottom button-bottom-small">Ready?</button>
@@ -65,7 +65,7 @@
                              ng-class="{'finish-won': player.playerWon === 1, 'finish-lost': player.playerWon === 2}"
                              on-touchstart="player.touch(1, $event)" style="padding: 10px 50px;">
 
-                            <h4>Player 1</h4>
+                            <h4>Player 1 - Add Keys</h4>
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
                                 <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(1)" on-touch="player.setReady(1, true)" class="button button-bottom button-bottom-small">Ready?</button>

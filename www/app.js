@@ -174,7 +174,7 @@ lockMe.directive("lock", function () {
     return {
         scope: true,
         controller: LockController,
-        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
+        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-arrow"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
     }
 });
 
@@ -182,6 +182,6 @@ lockMe.directive("multiPlayerLock", function () {
     return {
         scope: true,
         controller: MultiPlayerLockController,
-        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
+        template: '<img src="img/lock.png" /><div class="lock-knob-red"></div><div class="lock-knob"></div><div class="lock-arrow"></div><div class="lock-counter"><table><tr><td>{{lock.stepsNeeded}}</td></tr></table></div>'
     }
 });

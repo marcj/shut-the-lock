@@ -9,6 +9,11 @@ html, body {
   font-family: "Aller";
 }
 
+//ion-content {
+//  -webkit-transform: translate3d(0, 0, 0);
+//  -webkit-backface-visibility: hidden;
+//  -webkit-perspective: 1000;
+//}
 
 $actionButton: #47e6c4;
 //$actionButton: #e1a51b;
@@ -122,12 +127,14 @@ $actionButton: #47e6c4;
 [data-lock], [data-multi-player-lock] {
   max-width: 574px;
   max-height: 574px;
-
+  position: relative;
   margin: auto;
 
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  -webkit-perspective: 1000;
+
+  //-webkit-transform: translate3d(0, 0, 0);
+  //-webkit-backface-visibility: hidden;
+  //-webkit-perspective: 1000;
+
   //
   //&:after {
   //  content: ".";
@@ -146,7 +153,20 @@ $actionButton: #47e6c4;
 .lock-knob {
   background-image: url(../img/lock-knob.png);
   height: 100%;
-  background-size: 52%;
+  background-size: 82%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.lock-arrow {
+  background-image: url(../img/lock-arrow.png);
+  height: 100%;
+  background-size: 82%;
   background-position: center center;
   background-repeat: no-repeat;
   position: absolute;
@@ -168,6 +188,7 @@ $actionButton: #47e6c4;
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
+  border-radius: 555px;
 }
 
 @keyframes failed {
@@ -175,7 +196,7 @@ $actionButton: #47e6c4;
     opacity: 0;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.3;
   }
   100% {
     opacity: 0;
@@ -183,7 +204,6 @@ $actionButton: #47e6c4;
 }
 
 .lock-knob-red.visible {
-  border-radius: 555px;
   animation-name: failed;
   animation-duration: 0.4s;
   animation-iteration-count: 1;
