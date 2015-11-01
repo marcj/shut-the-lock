@@ -14,7 +14,7 @@
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
                                 <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(2)" on-touch="player.setReady(2, true)" class="button button-bottom button-bottom-small">Ready?</button>
-                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(2)" on-touch="player.setReady(2, false)" class="button button-bottom button-bottom-small button-balanced">Ready!</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(2)" on-touch="player.setReady(2, false)" class="button button-bottom button-bottom-small button-balanced button-ready-ready">Ready!</button>
                             </div>
                             <div ng-if="player.hard" class="hearts">
                                 <span ng-class="{'ion-heart-broken': player.getLives(2) < 1, 'ion-heart': player.getLives(2) >= 1}"></span>
@@ -69,7 +69,7 @@
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
                                 <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(1)" on-touch="player.setReady(1, true)" class="button button-bottom button-bottom-small">Ready?</button>
-                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(1)" on-touch="player.setReady(1, false)" class="button button-bottom button-bottom-small button-balanced">Ready!</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(1)" on-touch="player.setReady(1, false)" class="button button-bottom button-bottom-small button-balanced button-ready-ready">Ready!</button>
                             </div>
 
                             <div ng-if="player.hard" class="hearts">

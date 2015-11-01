@@ -228,7 +228,7 @@ var LockController = (function () {
         //this.stepsNeeded = 1;
         this.currentAngle = 0;
         this.targetStep = 0;
-        this.lastStep = 0; //helper var to determine the needed steps per round
+        //this.lastStep = 0; //helper var to determine the needed steps per round
 
         $scope.$on('$destroy', function () {
             _this.stop();
@@ -321,7 +321,7 @@ var LockController = (function () {
         value: function nextStep(bigDiff) {
             var _this3 = this;
 
-            this.direction = this.direction === 'left' ? 'right' : 'left';
+            this.direction = this.direction === 'right' ? 'left' : 'right';
 
             var diff = 6;
             var minDiff = 3;
@@ -330,10 +330,12 @@ var LockController = (function () {
                 diff = 11;
             }
 
+            var currentStep = Math.abs(Math.floor(this.currentAngle / (360 / this.steps)));
+
             if (this.direction === 'left') {
-                this.targetStep = (0, _utils.getRandomIntInclusive)(this.targetStep - diff, this.targetStep - minDiff);
+                this.targetStep = (0, _utils.getRandomIntInclusive)(currentStep - diff, currentStep - minDiff);
             } else {
-                this.targetStep = (0, _utils.getRandomIntInclusive)(this.targetStep + minDiff, this.targetStep + diff);
+                this.targetStep = (0, _utils.getRandomIntInclusive)(currentStep + minDiff, currentStep + diff);
             }
 
             this.targetPosition = this.targetStep * (360 / this.steps);
@@ -341,10 +343,10 @@ var LockController = (function () {
             this.knob.style[ionic.CSS.TRANSFORM] = 'rotateZ(' + this.targetPosition + 'deg)';
 
             var timePerStep = 140;
-            var stepsNeeded = Math.abs(this.lastStep - this.targetStep);
-            var timeTotal = stepsNeeded * timePerStep;
+            var stepsNeeded = (this.targetPosition - this.currentAngle) / (360 / this.steps);
+            var timeTotal = Math.abs(stepsNeeded * timePerStep);
 
-            this.lastStep = this.targetStep;
+            //this.lastStep = this.targetStep;
 
             this.runs = true;
             var lastLoop = new Date();
@@ -352,14 +354,12 @@ var LockController = (function () {
             var debug = document.getElementById('debug');
             var startedAngle = this.currentAngle;
 
-            console.log('targetStep=', this.targetStep, 'stepsNeeded=', stepsNeeded, 'currentAngle', this.currentAngle, 'targetPosition=', this.targetPosition);
+            console.log('currentStep=', currentStep, 'stepsneeded=', stepsNeeded.toFixed(0), ' - time:', timeTotal.toFixed(0), 'stepsNeeded=', stepsNeeded, 'currentAngle', this.currentAngle, 'targetPosition=', this.targetPosition);
 
             var from = this.currentAngle;
             var to = this.targetPosition;
 
-            if (this.currentAngle > this.targetPosition) {
-                //0 / -30
-                //to left
+            if (this.direction === 'left') {
                 //from = from - this.tolerance;
                 to = to - this.tolerance;
             } else {
@@ -681,7 +681,7 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -716,7 +716,7 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 

@@ -120,16 +120,11 @@ $actionButton: #47e6c4;
 
 
 
-
-
-
-
 [data-lock], [data-multi-player-lock] {
-  max-width: 574px;
-  max-height: 574px;
+  width: 527px;
+  height: 527px;
   position: relative;
   margin: auto;
-
 
   //-webkit-transform: translate3d(0, 0, 0);
   //-webkit-backface-visibility: hidden;
@@ -145,16 +140,15 @@ $actionButton: #47e6c4;
   //}
 
   img {
-    max-width: 80%;
-    max-height: 80%;
+    width: 100%;
   }
 }
 
 .lock-knob {
   background-image: url(../img/lock-knob.png);
   height: 100%;
-  background-size: 82%;
-  background-position: center center;
+  background-size: cover;
+  //background-position: center center;
   background-repeat: no-repeat;
   position: absolute;
   top: 0;
@@ -166,8 +160,7 @@ $actionButton: #47e6c4;
 .lock-arrow {
   background-image: url(../img/lock-arrow.png);
   height: 100%;
-  background-size: 82%;
-  background-position: center center;
+  background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
   top: 0;
@@ -184,11 +177,9 @@ $actionButton: #47e6c4;
   right: 0;
   background-image: url(../img/lock-knob-red.png);
   height: 100%;
-  background-size: 60%;
-  background-position: center center;
+  background-size: cover;
   background-repeat: no-repeat;
   opacity: 0;
-  border-radius: 555px;
 }
 
 @keyframes failed {
@@ -308,6 +299,10 @@ table {
     background-color: $actionButton;
     border: 0;
   }
+}
+
+.button-ready-ready {
+  background-color: darken($actionButton, 20%) !important;
 }
 
 .count-down {
@@ -552,15 +547,80 @@ table {
 }
 
 
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 568px)
-and (orientation : portrait) {
-  /* iPhone 5 */
 
+@media (max-width: 350px) {
+  /* iPhone 5 */
   .level-label {
     padding-bottom: 8px;
 
   }
 
+  [data-lock] {
+    width: 527px*0.5;
+    height: 527px*0.5;
+  }
+
+  [data-multi-player-lock] {
+    width: 527px*0.41;
+    height: 527px*0.41;
+  }
+}
+
+@media (min-width: 350px) {
+  [data-lock] {
+    width: 527px*0.65;
+    height: 527px*0.65;
+  }
+
+  [data-multi-player-lock] {
+    width: 527px*0.45;
+    height: 527px*0.45;
+  }
+}
+
+@media (min-width: 450px) {
+  [data-lock] {
+    width: 527px;
+    height: 527px;
+  }
+
+  [data-multi-player-lock] {
+    width: 527px*0.55;
+    height: 527px*0.55;
+  }
+}
+
+@media (min-width: 550px) {
+  [data-multi-player-lock] {
+    width: 527px*0.65;
+    height: 527px*0.65;
+  }
+}
+
+@media (min-width: 650px) {
+  [data-multi-player-lock] {
+    width: 527px*0.75;
+    height: 527px*0.75;
+  }
+}
+
+@media (min-width: 750px) {
+  [data-multi-player-lock] {
+    width: 527px*0.80;
+    height: 527px*0.80;
+  }
+}
+
+@media (min-width: 850px) {
+  [data-multi-player-lock] {
+    width: 527px*0.90;
+    height: 527px*0.90;
+  }
+}
+
+@media (min-width: 950px) {
+  [data-multi-player-lock] {
+    width: 527px;
+    height: 527px;
+  }
 }
