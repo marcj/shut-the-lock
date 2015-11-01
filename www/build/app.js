@@ -296,9 +296,7 @@ var LockController = (function () {
                 _this2.knobRed.classList.remove('visible');
             }, 400);
 
-            this.$timeout(function () {
-                _this2.player.onFailed(_this2);
-            }, 1);
+            this.player.onFailed(this);
         }
     }, {
         key: 'onSuccess',
@@ -390,7 +388,9 @@ var LockController = (function () {
 
                 _this3.runs = false;
                 //console.log('complete');
-                _this3.onFailure();
+                _this3.$timeout(function () {
+                    _this3.onFailure();
+                });
             });
 
             this.lastAnimation.start();
@@ -479,6 +479,7 @@ var MultiPlayerController = (function () {
         this.$state = $state;
         this.locks = [];
         this.hard = false;
+        this.keysMax = 8;
 
         this.reset();
     }
@@ -486,7 +487,7 @@ var MultiPlayerController = (function () {
     _createClass(MultiPlayerController, [{
         key: 'reset',
         value: function reset() {
-            this.keysOpen = 3;
+            this.keysOpen = this.keysMax / 2;
             this.activeGame = false;
 
             this.ready = { 1: false, 2: false };
@@ -527,7 +528,7 @@ var MultiPlayerController = (function () {
     }, {
         key: 'updateNeededSteps',
         value: function updateNeededSteps() {
-            this.player1.stepsNeeded = 6 - this.keysOpen;
+            this.player1.stepsNeeded = this.keysMax - this.keysOpen;
             this.player2.stepsNeeded = this.keysOpen;
         }
     }, {
@@ -633,7 +634,7 @@ var MultiPlayerController = (function () {
             if (this.keysOpen === 0) {
                 return this.finished(2);
             }
-            if (this.keysOpen === 6) {
+            if (this.keysOpen === this.keysMax) {
                 return this.finished(1);
             }
 
@@ -922,12 +923,12 @@ var SinglePlayerController = (function () {
 
             this.$timeout(function () {
                 _this3.failed = true;
-                //this.blocked = true;
+                _this3.blocked = true;
             }, 1);
 
-            //this.$timeout(() => {
-            //    this.blocked = false;
-            //}, 340);
+            this.$timeout(function () {
+                _this3.blocked = false;
+            }, 340);
         }
     }]);
 

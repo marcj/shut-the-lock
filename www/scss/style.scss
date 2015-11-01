@@ -182,23 +182,23 @@ $actionButton: #47e6c4;
   opacity: 0;
 }
 
-@keyframes failed {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.lock-knob-red.visible {
-  animation-name: failed;
-  animation-duration: 0.4s;
-  animation-iteration-count: 1;
-}
+//@keyframes failed {
+//  0% {
+//    opacity: 0;
+//  }
+//  50% {
+//    opacity: 0.3;
+//  }
+//  100% {
+//    opacity: 0;
+//  }
+//}
+//
+//.lock-knob-red.visible {
+//  animation-name: failed;
+//  animation-duration: 0.4s;
+//  animation-iteration-count: 1;
+//}
 
 .lock-counter {
   position: absolute;
@@ -405,6 +405,7 @@ table {
 //}
 
 .lock-inversed {
+  -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
@@ -561,8 +562,8 @@ table {
   }
 
   [data-multi-player-lock] {
-    width: 527px*0.41;
-    height: 527px*0.41;
+    width: 527px*0.34;
+    height: 527px*0.34;
   }
 }
 
@@ -573,8 +574,8 @@ table {
   }
 
   [data-multi-player-lock] {
-    width: 527px*0.45;
-    height: 527px*0.45;
+    width: 527px*0.40;
+    height: 527px*0.40;
   }
 }
 
@@ -585,22 +586,22 @@ table {
   }
 
   [data-multi-player-lock] {
-    width: 527px*0.55;
-    height: 527px*0.55;
+    width: 527px*0.50;
+    height: 527px*0.50;
   }
 }
 
 @media (min-width: 550px) {
   [data-multi-player-lock] {
-    width: 527px*0.65;
-    height: 527px*0.65;
+    width: 527px*0.60;
+    height: 527px*0.60;
   }
 }
 
 @media (min-width: 650px) {
   [data-multi-player-lock] {
-    width: 527px*0.75;
-    height: 527px*0.75;
+    width: 527px*0.70;
+    height: 527px*0.70;
   }
 }
 

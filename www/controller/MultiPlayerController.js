@@ -4,12 +4,13 @@ export default class MultiPlayerController {
         this.$state = $state;
         this.locks = [];
         this.hard = false;
+        this.keysMax = 8;
 
         this.reset();
     }
 
     reset() {
-        this.keysOpen = 3;
+        this.keysOpen = this.keysMax/2;
         this.activeGame = false;
 
         this.ready = {1: false, 2: false};
@@ -46,7 +47,7 @@ export default class MultiPlayerController {
     }
 
     updateNeededSteps(){
-        this.player1.stepsNeeded = 6 - this.keysOpen;
+        this.player1.stepsNeeded = this.keysMax - this.keysOpen;
         this.player2.stepsNeeded = this.keysOpen;
     }
 
@@ -141,7 +142,7 @@ export default class MultiPlayerController {
         if (this.keysOpen === 0) {
             return this.finished(2);
         }
-        if (this.keysOpen === 6) {
+        if (this.keysOpen === this.keysMax) {
             return this.finished(1);
         }
 

@@ -13,8 +13,8 @@
                             <h4>Player 2 - Crack Keys</h4>
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
-                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(2)" on-touch="player.setReady(2, true)" class="button button-bottom button-bottom-small">Ready?</button>
-                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(2)" on-touch="player.setReady(2, false)" class="button button-bottom button-bottom-small button-balanced button-ready-ready">Ready!</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(2)" on-touchstart="player.setReady(2, true)" class="button button-bottom button-bottom-small">Ready?</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(2)" on-touchstart="player.setReady(2, false)" class="button button-bottom button-bottom-small button-balanced button-ready-ready">Ready!</button>
                             </div>
                             <div ng-if="player.hard" class="hearts">
                                 <span ng-class="{'ion-heart-broken': player.getLives(2) < 1, 'ion-heart': player.getLives(2) >= 1}"></span>
@@ -42,7 +42,7 @@
                 <td height="40px">
                         <table class="multiplayer-locks">
                             <tr>
-                                <td class="dark" width="22%">
+                                <td class="dark" width="17%">
                                     <a class="icon ion-ios-arrow-left" on-touch="goBack()">Back</a></td>
                                 <td>
                                     <span class="ion-key" on-touch="player.setActiveKeys(1)" ng-class="{'active':player.isKeyOpen(1)}"></span>
@@ -50,9 +50,11 @@
                                     <span class="ion-key" on-touch="player.setActiveKeys(3)" ng-class="{'active':player.isKeyOpen(3)}"></span>
                                     <span class="ion-key" on-touch="player.setActiveKeys(4)" ng-class="{'active':player.isKeyOpen(4)}"></span>
                                     <span class="ion-key" on-touch="player.setActiveKeys(5)" ng-class="{'active':player.isKeyOpen(5)}"></span>
-                                    <span class="ion-key" ng-class="{'active':player.isKeyOpen(6)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(6)" ng-class="{'active':player.isKeyOpen(6)}"></span>
+                                    <span class="ion-key" on-touch="player.setActiveKeys(7)" ng-class="{'active':player.isKeyOpen(7)}"></span>
+                                    <span class="ion-key" ng-class="{'active':player.isKeyOpen(8)}"></span>
                                 </td>
-                                <td class="dark" width="22%"></td>
+                                <td class="dark" width="17%"></td>
                             </tr>
                         </table>
                     </div>
@@ -65,11 +67,11 @@
                              ng-class="{'finish-won': player.playerWon === 1, 'finish-lost': player.playerWon === 2}"
                              on-touchstart="player.touch(1, $event)" style="padding: 10px 50px;">
 
-                            <h4>Player 1 - Add Keys</h4>
+                            <h4>Player 1 - Lock Keys</h4>
                             <div ng-show="!player.playerWon" data-multi-player-lock></div>
                             <div class="button-ready">
-                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(1)" on-touch="player.setReady(1, true)" class="button button-bottom button-bottom-small">Ready?</button>
-                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(1)" on-touch="player.setReady(1, false)" class="button button-bottom button-bottom-small button-balanced button-ready-ready">Ready!</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && !player.isReady(1)" on-touchstart="player.setReady(1, true)" class="button button-bottom button-bottom-small">Ready?</button>
+                                <button ng-if="!player.playerWon && !player.activeGame && player.isReady(1)" on-touchstart="player.setReady(1, false)" class="button button-bottom button-bottom-small button-balanced button-ready-ready">Ready!</button>
                             </div>
 
                             <div ng-if="player.hard" class="hearts">

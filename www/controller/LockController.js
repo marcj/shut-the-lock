@@ -73,9 +73,7 @@ export default class LockController {
             this.knobRed.classList.remove('visible');
         }, 400);
 
-        this.$timeout(() => {
-            this.player.onFailed(this);
-        }, 1);
+        this.player.onFailed(this);
     }
 
     onSuccess() {
@@ -164,7 +162,9 @@ export default class LockController {
 
                 this.runs = false;
                 //console.log('complete');
-                this.onFailure();
+                this.$timeout(() => {
+                    this.onFailure();
+                });
             });
 
         this.lastAnimation.start();

@@ -153,11 +153,11 @@ export default class SinglePlayerController {
 
         this.$timeout(() => {
             this.failed = true;
-            //this.blocked = true;
+            this.blocked = true;
         }, 1);
 
-        //this.$timeout(() => {
-        //    this.blocked = false;
-        //}, 340);
+        this.$timeout(() => {
+            this.blocked = false;
+        }, 340);
     }
 }
